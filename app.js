@@ -9,14 +9,14 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => {
-  res.send("welcome to StudentVerse API");
-});
+// app.get("/", (req, res) => {
+//   res.send("welcome to StudentVerse API");
+// });
 
 // import routes
 const userRoutes = require("./src/routes/user");
 
-app.use("/user", userRoutes);
+app.use(userRoutes);
 
 const PORT = process.env.PORT || 5000;
 
