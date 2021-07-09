@@ -48,6 +48,41 @@ const userSignup = asyncHandler(async (req, res) => {
   }
 });
 
+const userLogin = asyncHandler(async (req, res, next) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return next(new ErrorResponse("Please provide username and password"), 400);
+  }
+
+  // Check user
+  const user = await User.findOne({ username: username }).select("+password");
+  //because in password field we have set the property select:false , but here we need as password so we added + sign
+
+  if (!user) {
+    res
+    .status(201)
+    .json({
+      success: false,
+      message: 'Invalid credentails user',
+    });  
+  }
+
+  // const isMatch = await user.matchPassword(password); // decrypt password
+  
+  if (user.password!= password) {
+    res
+    .status(201)
+    .json({
+      success: false,
+      message: 'Invalid credentails',
+    });
+  }
+ else{
+  sendTokenResponse(user, 200, res);
+}
+});
+
 module.exports = {
-  userSignup,
+  userSignup, userLogin
 };
