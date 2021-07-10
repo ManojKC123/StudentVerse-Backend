@@ -3,6 +3,8 @@ const User = require("../model/user");
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("../auth/async");
 const ErrorResponse = require("../auth/ErrorResponse");
+const avatar = require("avatar-initials");
+const asyncHandler = require("../auth/async");
 // const jwt = require("jsonwebtoken");
 
 
