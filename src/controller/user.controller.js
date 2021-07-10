@@ -4,9 +4,7 @@ const bcrypt = require("bcryptjs");
 const asyncHandler = require("../auth/async");
 const ErrorResponse = require("../auth/ErrorResponse");
 const avatar = require("avatar-initials");
-const asyncHandler = require("../auth/async");
 // const jwt = require("jsonwebtoken");
-
 
 //--------------------------REGISTER USER-----------------
 const userSignup = asyncHandler(async (req, res) => {
@@ -36,7 +34,6 @@ const userSignup = asyncHandler(async (req, res) => {
   }
 });
 
-
 //--------------------------LOGIN-----------------
 
 const userLogin = asyncHandler(async (req, res, next) => {
@@ -51,30 +48,25 @@ const userLogin = asyncHandler(async (req, res, next) => {
   //because in password field we have set the property select:false , but here we need as password so we added + sign
 
   if (!user) {
-    res
-      .status(201)
-      .json({
-        success: false,
-        message: 'Invalid credentails user',
-      });
+    res.status(201).json({
+      success: false,
+      message: "Invalid credentails user",
+    });
   }
 
   const compare = await user.matchPassword(password);
   if (!compare) {
-    res
-      .status(201)
-      .json({
-        success: false,
-        message: 'Invalid credentails',
-      });
-  }
-  else {
+    res.status(201).json({
+      success: false,
+      message: "Invalid credentails",
+    });
+  } else {
     sendTokenResponse(user, 200, res);
   }
 });
 
 //--------------------------LOGOUT-----------------
-const Logout = asyncHandler(async (req, res, next) =>{
+const Logout = asyncHandler(async (req, res, next) => {
   res.cookie("token", "none", {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
@@ -87,17 +79,39 @@ const Logout = asyncHandler(async (req, res, next) =>{
 });
 
 //--------------------------USER DETAULS-----------------
-const getUser = asyncHandler(async(req, res, next)=>{
-  const user = await User.findOne({ _id: req.user._id});
+const getUser = asyncHandler(async (req, res, next) => {
+  const user = await User.findOne({ _id: req.user._id });
   res.status(200).json({
     success: true,
     data: user,
-  })
+  });
 });
 
+//--------------------------User Update-----------------
+const updateUser = asyncHandler(async (req, res, next) => {
+  const user = await User.updateOne(
+    { _id: req.user._id },
+    {
+      email: data.email,
+      fname: data.fname,
+      lname: data.lname,
+      mobile: data.mobile,
+      // password: hash,
+      address: data.address,
+      // imageprof: image,
+      // userType: 'user',
+    },
+    function (err, data) {
+      if (err) {
+        console.log("update profile error", err);
+      } else {
+        return res.status(200).json({ message: "Updated Successfully", data });
+      }
+    }
+  );
+});
 
 const sendTokenResponse = (user, statusCode, res) => {
-
   const token = user.getSignedJwtToken();
 
   const options = {
@@ -121,9 +135,12 @@ const sendTokenResponse = (user, statusCode, res) => {
       success: true,
       token,
     });
-
 };
 
 module.exports = {
-  userSignup, userLogin, Logout, getUser,
+  userSignup,
+  userLogin,
+  Logout,
+  getUser,
+  updateUser,
 };
