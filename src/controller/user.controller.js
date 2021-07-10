@@ -1,27 +1,15 @@
 require("../../config/db_connection");
 const User = require("../model/user");
-const userController = require("../controller/user.controller");
 const bcrypt = require("bcryptjs");
-const avatar = require("avatar-initials");
-const asyncHandler = require("../auth/async")
+const asyncHandler = require("../auth/async");
+const ErrorResponse = require("../auth/ErrorResponse");
 // const jwt = require("jsonwebtoken");
 
+
+//--------------------------REGISTER USER-----------------
 const userSignup = asyncHandler(async (req, res) => {
   const data = req.body;
   const password = data.password;
- 
-  // const first_initial = data.fname.substring(0,1);
-  // const last_initial = data.lname.substring(0,1);
-  // const initials = first_initial + last_initial;
-  // console.log(initials);
-  // // const initial_png = avatar.initialAvatar({
-  // //   initials: initials,
-  // //   initial_fg: '#888888',
-  // //   initial_bg: '#f4f6f7',
-  // //   initial_size: 0, 
-  // //   initial_weight: 100,
-  // //   initial_font_family: "'Lato', 'Lato-Regular', 'Helvetica Neue'",
-  // // });
 
   const hash = await bcrypt.hash(password, 7);
   const uNameE = data.email.substring(0, data.email.indexOf("@"));
@@ -32,8 +20,6 @@ const userSignup = asyncHandler(async (req, res) => {
     username: uNameE,
     mobile: data.mobile,
     password: hash,
-    // profilepic: initial_png,
-    token: "",
   });
 
   const registered = await user.save();
@@ -48,6 +34,9 @@ const userSignup = asyncHandler(async (req, res) => {
   }
 });
 
+
+//--------------------------LOGIN-----------------
+
 const userLogin = asyncHandler(async (req, res, next) => {
   const { username, password } = req.body;
 
@@ -61,28 +50,78 @@ const userLogin = asyncHandler(async (req, res, next) => {
 
   if (!user) {
     res
-    .status(201)
-    .json({
-      success: false,
-      message: 'Invalid credentails user',
-    });  
+      .status(201)
+      .json({
+        success: false,
+        message: 'Invalid credentails user',
+      });
   }
 
-  // const isMatch = await user.matchPassword(password); // decrypt password
-  
-  if (user.password!= password) {
+  const compare = await user.matchPassword(password);
+  if (!compare) {
     res
-    .status(201)
-    .json({
-      success: false,
-      message: 'Invalid credentails',
-    });
+      .status(201)
+      .json({
+        success: false,
+        message: 'Invalid credentails',
+      });
   }
- else{
-  sendTokenResponse(user, 200, res);
-}
+  else {
+    sendTokenResponse(user, 200, res);
+  }
 });
 
+//--------------------------LOGOUT-----------------
+const Logout = asyncHandler(async (req, res, next) =>{
+  res.cookie("token", "none", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    data: "User Logged Out",
+  });
+});
+
+//--------------------------USER DETAULS-----------------
+const getUser = asyncHandler(async(req, res, next)=>{
+  const user = await User.findOne({ _id: req.user._id});
+  res.status(200).json({
+    success: true,
+    data: user,
+  })
+});
+
+
+const sendTokenResponse = (user, statusCode, res) => {
+
+  const token = user.getSignedJwtToken();
+
+  const options = {
+    //Cookie will expire in 30 days
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+  };
+
+  // Cookie security is false .if you want https then use this code. do not use in development time
+  // if (process.env.NODE_ENV === "proc") {
+  //   options.secure = true;
+  // }
+
+  //we have created a cookie with a token
+  res
+    .status(statusCode)
+    .cookie("token", token, options) // key , value ,options
+    .json({
+      success: true,
+      token,
+    });
+
+};
+
 module.exports = {
-  userSignup, userLogin
+  userSignup, userLogin, Logout, getUser,
 };
