@@ -28,7 +28,7 @@ exports.loadPostsById = asyncHandler(async (req, res, next) =>{
 });
 
 // -----------------Create Question-------------------
-exports.addQuestion = asyncHandler(async (req, res, next)=>{
+exports.addPost = asyncHandler(async (req, res, next)=>{
     const result = validationResult(req);
     if(!result.isEmpty()){
         const errors = result.array({ onlyFirstError: true});
@@ -44,6 +44,9 @@ exports.addQuestion = asyncHandler(async (req, res, next)=>{
     });
     res.status(201).json(post);
 });
+
+// -----------------Create Answer-------------------
+
 
 // -----------------Delete Question-------------------
 exports.removePost = asyncHandler(async (req, res, next)=>{
