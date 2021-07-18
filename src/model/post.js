@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const answerSchema = require('./answer');
-const commentSchema = require('./commentSchema');
-const voteSchema = require('./voteSchema');
+const commentSchema = require('./comment');
+const voteSchema = require('./vote');
 
 const postSchema = new mongoose.Schema({
     author: {
-        type: schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
         required: true
     },
@@ -17,7 +17,7 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: [true, "Enter your queries"]
     },
-    tags:[{type: string, required: true}],
+    tags:[{type: String, required: true}],
     answer:[answerSchema],
     comment: [commentSchema],
     score: {type: Number, default: 0},
@@ -26,7 +26,7 @@ const postSchema = new mongoose.Schema({
     createdAt: {type:Date, default: Date.now},
 });
 
-questionSchema.methods = {
+postSchema.methods = {
     vote: function (user, vote){
         const existingVote = this.votes.find((v)=> v.user._id.equals(user));
 

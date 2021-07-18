@@ -20,6 +20,7 @@ const userRoutes = require("./src/routes/user");
 const postRoutes = require("./src/routes/post");
 app.use(userRoutes);
 app.use(postRoutes);
+
 const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, function (err, done) {

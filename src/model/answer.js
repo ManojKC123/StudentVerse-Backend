@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const schema = mongoose.schema;
+const schema = mongoose.Schema;
 
 const voteSchema = require('./vote');
 const commentSchema = require('./comment');
@@ -16,6 +16,8 @@ const answerSchema = new schema({
     votes:[voteSchema],
     score: {type: Number, default: 0}
 });
+
+answerSchema.set('toJSON', { getters: true });
 
 answerSchema.methods = {
     vote: function (user, vote) {
@@ -52,4 +54,4 @@ removeComment: function(id){
 };
 
 
-module.exports = mongoose.model('Answer', answerSchema)
+module.exports = answerSchema;
