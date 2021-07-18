@@ -26,3 +26,34 @@ exports.loadPostsById = asyncHandler(async (req, res, next) =>{
         data: post
     });
 });
+
+// -----------------Create Question-------------------
+exports.addQuestion = asyncHandler(async (req, res, next)=>{
+    const result = validationResult(req);
+    if(!result.isEmpty()){
+        const errors = result.array({ onlyFirstError: true});
+        return res.status(422).json({errors});
+    }
+    const {title, tag, body} = req.body;
+    const author = req.user.id;
+    const post = await Post.create({
+        title,
+        tag,
+        author,
+        body
+    });
+    res.status(201).json(post);
+});
+
+// -----------------Delete Question-------------------
+exports.removePost = asyncHandler(async (req, res, next)=>{
+    const post = await Post.findById(req.params.id);
+
+    if(!post){
+        return next(new ErrorResponse('No Post Found'), 404);
+    }
+
+    await student.remove();
+    res.status(200).json({success: true, count:post.length, data: {},});
+});
+
