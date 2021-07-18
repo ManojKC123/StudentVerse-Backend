@@ -9,8 +9,8 @@ const {
 
 const {guard} = require("../auth/auth");
 
-router.get("/posts", guard, loadPosts);
-router.get("/post/:id", guard, loadPostsById);
+router.get("/posts", loadPosts);
+router.get("/post/:id", loadPostsById);
 router.post("/addQuestion", guard, addPost);
 
 module.exports = router;
