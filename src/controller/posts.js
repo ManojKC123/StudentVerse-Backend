@@ -42,7 +42,7 @@ exports.addPost = asyncHandler(async (req, res, next)=>{
         author,
         body
     });
-    res.status(201).json(post);
+    res.status(201).json({success: true, data: post});
 });
 
 // -----------------Create Answer-------------------
