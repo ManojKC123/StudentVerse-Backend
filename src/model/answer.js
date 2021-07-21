@@ -7,11 +7,10 @@ const commentSchema = require('./comment');
 const answerSchema = new schema({
     author: {
         type: schema.Types.ObjectId,
-        ref: 'user',
-        required: true
+        ref: 'user'
     },
     createdAt: {type: Date, default: Date.now},
-    text:{type: String, required: true},
+    text:{type: String},
     comment:[commentSchema],
     votes:[voteSchema],
     score: {type: Number, default: 0}

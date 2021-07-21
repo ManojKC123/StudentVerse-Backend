@@ -18,8 +18,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 // import routes
 const userRoutes = require("./src/routes/user");
 const postRoutes = require("./src/routes/post");
+const answerRoutes = require("./src/routes/answer");
 app.use(userRoutes);
 app.use(postRoutes);
+app.use(answerRoutes);
 
 const PORT = process.env.PORT || 5000;
 

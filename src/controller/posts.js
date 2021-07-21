@@ -45,7 +45,6 @@ exports.addPost = asyncHandler(async (req, res, next)=>{
     res.status(201).json({success: true, data: post});
 });
 
-// -----------------Create Answer-------------------
 
 
 // -----------------Delete Question-------------------

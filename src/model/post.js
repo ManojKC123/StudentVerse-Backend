@@ -59,7 +59,7 @@ postSchema.methods = {
     },
 
     addAnswer: function (author, text){
-        this.answers.push({author, text});
+        this.answer.push({author, text});
         return this.save();
     },
 
