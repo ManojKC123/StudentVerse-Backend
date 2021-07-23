@@ -9,47 +9,47 @@ const answerSchema = new schema({
         type: schema.Types.ObjectId,
         ref: 'user'
     },
-    createdAt: {type: Date, default: Date.now},
-    text:{type: String},
-    comment:[commentSchema],
-    votes:[voteSchema],
-    score: {type: Number, default: 0}
+    createdAt: { type: Date, default: Date.now },
+    text: { type: String },
+    comment: [commentSchema],
+    votes: [voteSchema],
+    score: { type: Number, default: 0 }
 });
 
 answerSchema.set('toJSON', { getters: true });
 
 answerSchema.methods = {
     vote: function (user, vote) {
-        const existingVote = this.votes.find((v)=> v.user._id.equals(user));
+        const existingVote = this.votes.find((v) => v.user._id.equals(user));
 
-        if(existingVote){
+        if (existingVote) {
             this.score -= exitstingVote.vote;
-            if (vote == 0){
+            if (vote == 0) {
                 this.votes.pull(existingVote);
             }
-            else{
+            else {
                 this.score += vote;
                 existingVote.vote = vote;
             }
         }
-        else if (vote !== 0){
+        else if (vote !== 0) {
             this.score += vote;
-            this.votes.push({user, vote});
+            this.votes.push({ user, vote });
         }
         return this;
     },
 
-addComment: function (author, body){
-    this.comment.push({ author, body});
-    return this;
-},
+    addComment: function (author, text) {
+        this.comment.push({ author, text });
+        return this;
+    },
 
-removeComment: function(id){
-    const comment = this.comments.id(id);
-    if (!comment) throw new Error('Comment Not Found');
-    comment.remove();
-    return this;
-},
+    removeComment: function (id) {
+        const comment = this.comment.id(id);
+        if (!comment) throw new Error('Comment Not Found');
+        comment.remove();
+        return this;
+    },
 };
 
 

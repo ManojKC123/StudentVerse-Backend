@@ -19,9 +19,11 @@ app.use(express.static(path.join(__dirname, 'public')))
 const userRoutes = require("./src/routes/user");
 const postRoutes = require("./src/routes/post");
 const answerRoutes = require("./src/routes/answer");
+const commentRoutes = require("./src/routes/comment");
 app.use(userRoutes);
 app.use(postRoutes);
 app.use(answerRoutes);
+app.use(commentRoutes);
 
 const PORT = process.env.PORT || 5000;
 

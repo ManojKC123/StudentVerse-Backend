@@ -48,7 +48,7 @@ postSchema.methods = {
     },
 
     addComment: function (author, body) {
-        this.comments.push({author, body});
+        this.comment.push({author, body});
         return this.save();
     },
 

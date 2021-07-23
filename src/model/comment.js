@@ -4,11 +4,10 @@ const schema = mongoose.Schema;
 const commentSchema = new schema({
     author: {
         type: schema.Types.ObjectId,
-        ref: 'user',
-        required: true
+        ref: 'user'
     },
     createdAt: {type: Date, default: Date.now},
-    text:{type: String, required: true}
+    text:{type: String}
 });
 
 commentSchema.set('toJSON', { getters: true });
