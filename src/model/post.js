@@ -48,7 +48,7 @@ postSchema.methods = {
     },
 
     addComment: function (author, body) {
-        this.comments.push({author, body});
+        this.comment.push({author, body});
         return this.save();
     },
 
@@ -59,7 +59,7 @@ postSchema.methods = {
     },
 
     addAnswer: function (author, text){
-        this.answers.push({author, text});
+        this.answer.push({author, text});
         return this.save();
     },
 
