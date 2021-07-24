@@ -9,11 +9,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, "public")));
 
-// app.get("/", (req, res) => {
-//   res.send("welcome to StudentVerse API");
-// });
+app.get("/", (req, res) => {
+  res.send("welcome to StudentVerse API");
+});
 
 // import routes
 const userRoutes = require("./src/routes/user");
@@ -43,10 +43,10 @@ app.use(function (req, res, next) {
 });
 
 // /error handling middleware
-app.use(function (err, req, res, next) {
-  console.log("middleware>>", err);
-  res.status(err.status || 400);
-  res.json({
-    message: err.msg || err,
-  });
-});
+// app.use(function (err, req, res, next) {
+//   console.log("middleware>>", err);
+//   res.status(err.status || 400);
+//   res.json({
+//     message: err.msg || err,
+//   });
+// });
