@@ -8,6 +8,6 @@ const {
 const {guard} = require("../auth/auth");
 
 router.post("/addAnswer", guard, addAnswer);
-router.post("/answers/:id", loadAnswer);
+router.get("/answers/:id", loadAnswer);
 
 module.exports = router;
