@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const answerSchema = require('./answer');
-const commentSchema = require('./comment');
 const voteSchema = require('./vote');
 
 const postSchema = new mongoose.Schema({
@@ -19,7 +18,6 @@ const postSchema = new mongoose.Schema({
     },
     tags:[{type: String, required: true}],
     answer:[answerSchema],
-    comment: [commentSchema],
     score: {type: Number, default: 0},
     votes: [voteSchema],
     views: {type: Number, default: 0},
@@ -47,16 +45,6 @@ postSchema.methods = {
         return this.save;
     },
 
-    addComment: function (author, body) {
-        this.comment.push({author, body});
-        return this.save();
-    },
-
-    removeComment: function (id) {
-        const comment = this.comments.id(id);
-        if (!comment) throw new Error ('Comment not found');
-        comment.remove();
-    },
 
     addAnswer: function (author, text){
         this.answer.push({author, text});
