@@ -7,7 +7,7 @@ const voteSchema = new schema({
         required: true
     }],
     vote:{type: Number, required: true}
-}
+},
 {_id: false}
 );
 
