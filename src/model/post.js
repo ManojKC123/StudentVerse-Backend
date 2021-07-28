@@ -44,6 +44,7 @@ postSchema.methods = {
              this.score += vote;
              console.log("This is score", this.score);
              this.votes.push({user, vote});   
+             return this.save;
         }
         return this.save;
     },
