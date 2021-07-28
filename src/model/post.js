@@ -24,6 +24,8 @@ const postSchema = new mongoose.Schema({
     createdAt: {type:Date, default: Date.now},
 });
 
+postSchema.set('toJSON', {getters:true});
+
 postSchema.methods = {
     vote: function (user, vote){
         const existingVote = this.votes.find((v)=> v.user._id.equals(user));

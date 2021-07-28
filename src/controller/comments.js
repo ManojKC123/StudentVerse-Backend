@@ -54,3 +54,15 @@ exports.addComment = async (req, res, next) => {
         next(error);
     }
 };
+
+exports.loadComment = asyncHandler(async(req, res, next) => {
+    const post = await Post.findById(req.params.id);
+    if (!post){
+        return next(new ErrorResponse("Post not Found"), 404);
+    }
+    res.status(201).json({
+        success: true,
+        count: post.length,
+        data: post.answer
+    })
+});
