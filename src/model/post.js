@@ -29,7 +29,7 @@ postSchema.set('toJSON', {getters:true});
 postSchema.methods = {
     vote: function (user, vote){
         const existingVote = this.votes.find((v)=> v.user._id.equals(user));
-
+        console.log("this is here", user , vote)
         if(existingVote){
             this.score -= existing.Vote;
             if (vote == 0 ){
