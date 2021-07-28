@@ -6,8 +6,8 @@ exports.upvote = asyncHandler(async(req, res) => {
     const poster = await Post.findById(req.body.post);
     const answer = req.body.answer;
     if (answer) {
-        
-        answer.vote(id, 1);
+        const findAns = await poster.answer.id(req.body.answer);
+        findAns.vote(id, 1);
         
         const answerVote = await poster.save();
         return res.json({success: true, message: "Up Voted Answer", data: answerVote});
