@@ -20,30 +20,20 @@ answerSchema.set("toJSON", { getters: true });
 
 answerSchema.methods = {
   vote: function (user, vote) {
-    console.log("user", user);
     const existingVote = this.votes.find((v) => {
-      console.log("vuser", v);
       if (v.user[0].equals(user)) {
         return v;
       }
       return false;
     });
-    console.log("existingVote", existingVote);
 
     if (existingVote) {
-      console.log("Youve already voted");
-      if (vote == -1) {
-        if (existingVote.vote == 1) {
-          this.score += existingVote.vote;
-          this.votes.pull(existingVote);
-        }
-        return false;
-      } else if (vote == 1) {
-        if (existingVote.vote == -1) {
-          this.score += existingVote.vote;
-          this.votes.pull(existingVote);
-        }
-        return false;
+      if (vote == -1 && existingVote.vote == 1) {
+        this.score += existingVote.vote;
+        this.votes.pull(existingVote);
+      } else if (vote == 1 && existingVote.vote == -1) {
+        this.score += existingVote.vote;
+        this.votes.pull(existingVote);
       }
     } else {
       this.score += vote;
