@@ -87,6 +87,20 @@ const getUser = asyncHandler(async (req, res, next) => {
   });
 });
 
+
+const findUser = asyncHandler(async(req, res, next) =>{
+  try{
+    const user = await User.findOne({_id: req.params.id});
+    res.status(200).json({
+      success: true,
+      data: user,
+    })
+  }
+  catch(error){
+    next(error);
+  }
+})
+
 //--------------------------User Update-----------------
 const updateUser = asyncHandler(async (req, res, next) => {
   const user = await User.updateOne(
@@ -143,4 +157,5 @@ module.exports = {
   Logout,
   getUser,
   updateUser,
+  findUser
 };

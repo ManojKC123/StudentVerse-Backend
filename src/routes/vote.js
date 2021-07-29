@@ -5,7 +5,7 @@ const { guard } = require("../auth/auth");
 
 const {upvote, downvote, unvote} = require("../controller/votes");
 
-router.get('/upvote', guard, upvote);
+router.post('/upvote', guard, upvote);
 router.post('/downvote', guard, downvote);
 router.post('/unvote', guard, unvote);
 
