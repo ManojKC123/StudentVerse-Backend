@@ -148,6 +148,7 @@ const sendTokenResponse = (user, statusCode, res) => {
     .json({
       success: true,
       token,
+      message: "Login Successfull"
     });
 };
 

@@ -42,7 +42,7 @@ exports.addPost = asyncHandler(async (req, res, next)=>{
         author,
         body
     });
-    res.status(201).json({success: true, data: post});
+    res.status(201).json({success: true, message: "Post added Successfully", data: post});
 });
 
 
@@ -55,7 +55,7 @@ exports.removePost = asyncHandler(async (req, res, next)=>{
         return next(new ErrorResponse('No Post Found'), 404);
     }
 
-    await student.remove();
-    res.status(200).json({success: true, count:post.length, data: {},});
+    await post.remove();
+    res.status(200).json({success: true, count:post.length, data: {}, message: "Post deleted Successfully"});
 });
 
