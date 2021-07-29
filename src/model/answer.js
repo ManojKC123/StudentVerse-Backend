@@ -23,7 +23,7 @@ answerSchema.methods = {
         const existingVote = this.votes.find((v) => v.user._id.equals(user));
 
         if (existingVote) {
-            this.score -= exitstingVote.vote;
+            this.score -= existingVote.vote;
             if (vote == 0) {
                 this.votes.pull(existingVote);
             }
