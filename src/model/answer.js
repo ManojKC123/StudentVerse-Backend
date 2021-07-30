@@ -29,10 +29,10 @@ answerSchema.methods = {
 
     if (existingVote) {
       if (vote == -1 && existingVote.vote == 1) {
-        this.score += existingVote.vote;
+        this.score -= existingVote.vote;
         this.votes.pull(existingVote);
       } else if (vote == 1 && existingVote.vote == -1) {
-        this.score += existingVote.vote;
+        this.score -= existingVote.vote;
         this.votes.pull(existingVote);
       }
     } else {
