@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const schema = mongoose.Schema;
+const voteSchema = require('./vote');
 
-const chapterSchema = new Schema({
+const chapterSchema = new schema({
     name: {type: String, required: [true, "Enter a chapter name"]},
     content: {type: String},
     votes: [voteSchema],

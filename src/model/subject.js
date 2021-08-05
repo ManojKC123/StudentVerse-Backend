@@ -10,11 +10,29 @@ const subjectSchema = new mongoose.Schema({
         required: [true, "Please enter a description"]
     },
     chapters:[chapterSchema],
-    picture:{
+    pictureName:{
+        required: true,
         type: String,
-        required: true
     },
+    pictureId: {
+        required: true,
+        type: String
+    }
 
 });
+
+subjectSchema.methods = {
+    addChapter: function(name, content){
+        this.chapters.push({name,content});
+        return this.save();
+    },
+
+    removeChapter: function(id){
+        const chapter = this.addChapter.id(id);
+        if (!chapter) throw new Error ("Chapter not found");
+        chapter.remove();
+        return this.save();
+    }
+}
 
 module.exports = mongoose.model('Subject', subjectSchema);
