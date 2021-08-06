@@ -1,25 +1,42 @@
 const mongoose = require('mongoose');
-const commentSchema = require('./comment');
 const schema = mongoose.Schema;
-const topicSchema = require('./topic');
+const voteSchema = require('./vote');
 
 const chapterSchema = new schema({
     name: {type: String, required: [true, "Enter a chapter name"]},
-    topic: [topicSchema],
+    content: {type: String},
+    pictureName:{
+        required: true,
+        type: String,
+    },
+    pictureId: {
+        required: true,
+        type: String
+    },
+    votes: [voteSchema],
+    score: {type: Number, default: 0}
 });
 
 chapterSchema.methods = {
-    addTopic: function (name, content){
-        this.topic.push({author, text});
+    vote: function (user,vote){
+        const existingVote = this.votes.find((v) => v.user._id.equals(user));
+
+        if (existingVote) {
+            this.score -= existingVote.vote;
+            if (vote == 0) {
+                this.votes.pull(existingVote);
+            }
+            else {
+                this.score += vote;
+                existingVote.vote = vote;
+            }
+        }
+        else if (vote !== 0) {
+            this.score += vote;
+            this.votes.push({ user, vote });
+        }
         return this;
     },
-
-    removeTopic: function (id){
-        const topic = this.topic.id(id);
-        if(!topic) throw new Error('Comment Not Found');
-        commentSchema.remove();
-        return this;
-    }
 }
 
 module.exports = chapterSchema;

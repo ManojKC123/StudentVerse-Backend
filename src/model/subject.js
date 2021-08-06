@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const chapterSchema = require('./chapter');
+const topicSchema = require('./topic');
+
 const subjectSchema = new mongoose.Schema({
     name:{
         type: String,
@@ -9,7 +10,7 @@ const subjectSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please enter a description"]
     },
-    chapters:[chapterSchema],
+    topic:[topicSchema],
     pictureName:{
         required: true,
         type: String,
@@ -22,15 +23,15 @@ const subjectSchema = new mongoose.Schema({
 });
 
 subjectSchema.methods = {
-    addChapter: function(name){
-        this.chapters.push({name});
+    addTopic: function(name, pictureName, pictureId){
+        this.topic.push({name, pictureName, pictureId});
         return this.save();
     },
 
-    removeChapter: function(id){
-        const chapter = this.addChapter.id(id);
-        if (!chapter) throw new Error ("Chapter not found");
-        chapter.remove();
+    removeTopic: function(id){
+        const topic = this.addTopic.id(id);
+        if (!topic) throw new Error ("Chapter not found");
+        topic.remove();
         return this.save();
     }
 }
