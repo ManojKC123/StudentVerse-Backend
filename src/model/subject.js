@@ -22,8 +22,8 @@ const subjectSchema = new mongoose.Schema({
 });
 
 subjectSchema.methods = {
-    addChapter: function(name, content){
-        this.chapters.push({name,content});
+    addChapter: function(name){
+        this.chapters.push({name});
         return this.save();
     },
 

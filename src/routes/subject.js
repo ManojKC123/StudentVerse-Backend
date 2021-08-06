@@ -15,7 +15,7 @@ module.exports = (upload) => {
     });
 
     /* POST Subject with single image */
-    subjectRouter.route('/image')
+    subjectRouter.route('/subject')
         .post(upload.single('picture'), (req, res, next) => {
             console.log(req.body);
             Subject.findOne({ name: req.body.name })
@@ -47,7 +47,7 @@ module.exports = (upload) => {
                 })
                 .catch(err => res.status(500).json(err));
         })
-        .get((req, res, next) => {
+        .get( guard , (req, res, next) => {
             Subject.find({})
                 .then(subjects => {
                     res.status(200).json({
