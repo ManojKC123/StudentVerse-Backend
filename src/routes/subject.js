@@ -17,17 +17,14 @@ module.exports = (upload) => {
     /* POST Subject with single image */
     subjectRouter.route('/subject')
         .post(upload.single('picture'), (req, res, next) => {
-            console.log(req.body);
             Subject.findOne({ name: req.body.name })
                 .then((subject) => {
-                    console.log(subject);
                     if (subject) {
                         return res.status(200).json({
                             success: false,
                             message: "Subject Already exists"
                         });
                     }
-                    console.log(req.file)
                     let newSubject = new Subject({
                         name: req.body.name,
                         description: req.body.description,

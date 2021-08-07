@@ -25,12 +25,14 @@ const answerRoutes = require("./src/routes/answer");
 const commentRoutes = require("./src/routes/comment");
 const voteRoutes = require("./src/routes/vote");
 const subjectRoutes = require("./src/routes/subject");
+const topicRoutes = require('./src/routes/topic');
 app.use(userRoutes);
 app.use(postRoutes);
 app.use(answerRoutes);
 app.use(commentRoutes);
 app.use(voteRoutes);
 app.use(subjectRoutes(upload));
+app.use(topicRoutes(upload));
 
 const PORT = process.env.PORT || 5000;
 
