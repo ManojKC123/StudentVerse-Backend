@@ -44,7 +44,7 @@ module.exports = (upload) => {
                 })
                 .catch(err => res.status(500).json(err));
         })
-        .get( guard , (req, res, next) => {
+        .get((req, res, next) => {
             Subject.find({})
                 .then(subjects => {
                     res.status(200).json({
