@@ -16,9 +16,9 @@ const topicSchema = new schema({
     }
 });
 
-chapterSchema.methods = {
-    addChapter: function (name, content){
-        this.chapter.push({name, content});
+topicSchema.methods = {
+    addChapter: function (name, content, pictureName, pictureId){
+        this.chapter.push({name, content, pictureName, pictureId});
         return this;
     },
 

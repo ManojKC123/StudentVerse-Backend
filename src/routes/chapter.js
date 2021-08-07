@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require('mongoose');
-const topicRouter = express.Router();
-const {addTopic, getTopic} = require('../controller/topics');
+const chapterRouter = express.Router();
+const {addChapter, getChapter} = require('../controller/chapters');
 const { guard } = require("../auth/auth");
 
 module.exports = (upload) => {
@@ -14,11 +14,11 @@ module.exports = (upload) => {
         });
     });
 
-    topicRouter.route('/topic')
-        .post(upload.single('picture'), addTopic)
-        .get(getTopic);
+    chapterRouter.route('/chapter')
+        .post(upload.single('picture'), addChapter)
+        .get(getChapter);
 
-    topicRouter.route('/topic/:pictureName')
+    chapterRouter.route('/chapter/:pictureName')
         .get((req, res, next) => {
             gfs.find({ filename: req.params.pictureName }).toArray((err, files) =>{
                 if (!files[0] || files.length === 0){
@@ -39,6 +39,6 @@ module.exports = (upload) => {
             })
         })
 
-    return topicRouter;
+    return chapterRouter;
 
 }
