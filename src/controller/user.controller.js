@@ -107,8 +107,8 @@ const updateUser = asyncHandler(async (req, res, next) => {
   const compare = await userForCheckpass.matchPassword(req.body.password);
   if (!compare) {
     return res
-      .status(503)
-      .json({ success: false, message: "Incorrect Current Password" });
+      .json({ success: false, message: "Incorrect Current Password" })
+      .status(503);
   }
   const hash = await bcrypt.hash(req.body.newPassword, 7);
   console.log("requser", req.user._id, req.user);
