@@ -4,16 +4,7 @@ const chapterSchema = require('./chapter');
 
 const topicSchema = new schema({
     name: {type: String, required: [true, "Enter a topic name"]},
-    description: {type: String, required: [true, "Please enter a description"]},
-    chapter: [chapterSchema],
-    pictureName:{
-        required: true,
-        type: String,
-    },
-    pictureId: {
-        required: true,
-        type: String
-    }
+    chapter: [chapterSchema]
 });
 
 topicSchema.methods = {
