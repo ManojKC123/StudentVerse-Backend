@@ -54,22 +54,3 @@ exports.getTopic = asyncHandler(async (req, res, next) => {
       })
     );
 });
-
-exports.getTopic = asyncHandler(async (req, res, next) => {
-  const subjectID = req.query.subjectID;
-  await Subject.findById(subjectID)
-    .then((subjects) => {
-      res.status(200).json({
-        success: true,
-        count: subjects.length,
-        data: subjects.topic,
-      });
-    })
-    .catch((err) =>
-      res.status(500).json({
-        succes: false,
-        message: "No Topics Found",
-        error: err,
-      })
-    );
-});

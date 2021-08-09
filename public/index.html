@@ -36,9 +36,9 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">API route</th>
-                                <th scope="col">API params</th>
-                                <th scope="col">API example</th>
+                                <th scope="col">API Functions</th>
+                                <th scope="col">API Requirements</th>
+                                <th scope="col">API Route</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,72 +47,168 @@
                             </tr>
                             <tr>
                                 <td>1</td>
+                                <td>Sign Up (post)</td>
+                                <td>User Data</td>
                                 <td>/signup</td>
-                                <td>laksdjf</td>
-                                <td>asdf</td>
                             </tr>
                             <tr>
                                 <td>2</td>
+                                <td>Login (post)</td>
+                                <td>username, password</td>
                                 <td>/login</td>
-                                <td>kas;djlkf</td>
-                                <td>/profile</td>
                             </tr>
                             <tr>
                                 <td>3</td>
+                                <td>User Profile (get)</td>
+                                <td>token</td>
                                 <td>/profile</td>
-                                <td>kas;djlkf</td>
-                                <td>asdfa</td>
                             </tr>
                             <tr>
                                 <td>4</td>
+                                <td>User Logout (get)</td>
+                                <td>Nothing</td>
                                 <td>/logout</td>
-                                <td>kas;djlkf</td>
-                                <td>asdfa</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Particular User (get)</td>
+                                <td>User ID</td>
+                                <td>/user/:id</td>
                             </tr>
                             <tr>
                                 <th colspan="4">Post Routes</th>
                             </tr>
                             <tr>
                                 <td>1</td>
+                                <td>Load Posts (get)</td>
+                                <td>Nothing</td>
                                 <td>/posts</td>
-                                <td>laksdjf</td>
-                                <td>asdf</td>
                             </tr>
                             <tr>
                                 <td>2</td>
+                                <td>Post by Id (get)</td>
+                                <td>Post ID</td>
                                 <td>/post/:id</td>
-                                <td>kas;djlkf</td>
-                                <td>/profile</td>
                             </tr>
                             <tr>
                                 <td>3</td>
+                                <td>Add a question (post)</td>
+                                <td>Token</td>
                                 <td>/addQuestion</td>
-                                <td>kas;djlkf</td>
-                                <td>asdfa</td>
                             </tr>
                             <tr>
                                 <th colspan="4">Answer Routes</th>
                             </tr>
                             <tr>
                                 <td>1</td>
-                                <td>/addAnswer</td>
-                                <td>laksdjf</td>
+                                <td>Add answer (post)</td>
+                                <td>Token, Post Id</td>
                                 <td>asdf</td>
                             </tr>
                             <tr>
-                                <td>3</td>
+                                <td>2</td>
+                                <td>Load Answer (get)</td>
+                                <td>Post Id</td>
                                 <td>/answers/:id</td>
-                                <td>kas;djlkf</td>
-                                <td>asdfa</td>
                             </tr>
                             <tr>
                                 <th colspan="4">Comment Routes</th>
                             </tr>
                             <tr>
                                 <td>1</td>
+                                <td>Add Comment (post)</td>
+                                <td>Token, Post Id, Answer Id</td>
                                 <td>/addComment</td>
-                                <td>laksdjf</td>
-                                <td>asdf</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Load Comment (get)</td>
+                                <td>Post Id</td>
+                                <td>/comment/:id</td>
+                            </tr>
+                            <tr>
+                                <th colspan="4">Vote Routes</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Upvote (post)</td>
+                                <td>Token, Post Id, Answer Id</td>
+                                <td>/upvote</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Downvote (post)</td>
+                                <td>Token, Post Id, Answer Id</td>
+                                <td>/downvote</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Unvote (post)</td>
+                                <td>Token, Post Id, Answer Id</td>
+                                <td>/comment/:id</td>
+                            </tr>
+                            <tr>
+                                <th colspan="4">Subject Routes</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Add Subject (post)</td>
+                                <td>Name, description, picture</td>
+                                <td>/subject</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Load Subject (get)</td>
+                                <td>Nothing</td>
+                                <td>/subject</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Load a picture (get)</td>
+                                <td>pictureName</td>
+                                <td>/picture/:pictureName</td>
+                            </tr>
+                            <tr>
+                                <th colspan="4">Topic Routes</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Add Topic (post)</td>
+                                <td>Subject Id; Name, description, picture</td>
+                                <td>/topic</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Load Subject (get)</td>
+                                <td>Subject Id</td>
+                                <td>/topic</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Load a picture (get)</td>
+                                <td>pictureName</td>
+                                <td>/topic/:pictureName</td>
+                            </tr>
+                            <tr>
+                                <th colspan="4">Chapter Routes</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Add chapter (post)</td>
+                                <td>Subject Id, Topic Id; Name, content, picture</td>
+                                <td>/chapter</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Load chapter (get)</td>
+                                <td>Subject Id</td>
+                                <td>/chapter</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Load a picture (get)</td>
+                                <td>pictureName</td>
+                                <td>/chapter/:pictureName</td>
                             </tr>
                         </tbody>
                     </table>

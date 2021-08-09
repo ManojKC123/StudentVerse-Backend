@@ -21,10 +21,10 @@ exports.addChapter = asyncHandler(async (req, res, next) => {
     
     await subject.save()
     .then((chapter)=>{
-        res.status(201).json({success: true, data: addchapter, message: "Chapter added SuccessFully"})
+        res.status(201).json({success: true, data: chapter, message: "Chapter added SuccessFully"})
     })
     .catch((err)=>{
-        res.status(201).json({success: false, error: err, message: "Chapter Not Added"})
+        res.status(400).json({success: false, error: err, message: "Chapter Not Added"})
     })
     
     
