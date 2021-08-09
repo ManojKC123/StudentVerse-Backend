@@ -21,17 +21,21 @@ const userSignup = asyncHandler(async (req, res) => {
     mobile: data.mobile,
     password: hash,
   });
-
-  const registered = await user.save();
-  if (registered) {
-    return res
-      .status(200)
-      .json({ success: true, message: "User Registered", data: data });
-  } else {
-    return res
-      .status(400)
-      .json({ success: false, message: "Register Failed", data: data });
-  }
+  user
+    .save()
+    .then((topic) => {
+      res.status(200).json({
+        success: true,
+        message: "User Registered Successfully!!!",
+        data: topic,
+      });
+    })
+    .catch((err) => {
+      res.status(400).json({
+        success: false,
+        message: err,
+      });
+    });
 });
 
 //--------------------------LOGIN-----------------
@@ -125,10 +129,13 @@ const updateUser = asyncHandler(async (req, res, next) => {
     function (err, data) {
       if (err) {
         console.log("update profile error", err);
+        return res
+          .status(400)
+          .json({ message: "User Update Error", success: false });
       } else {
         return res
           .status(200)
-          .json({ message: "User Updated Successfully", data });
+          .json({ message: "User Updated Successfully", data, success: true });
       }
     }
   );
