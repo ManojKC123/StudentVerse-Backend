@@ -4,34 +4,22 @@ const { body, validationResult } = require("express-validator");
 
 exports.addTopic = asyncHandler(async (req, res, next) => {
   const subject = await Subject.findOne({ _id: req.body.subject });
-  Subject.findOne({
-    "topic.name": req.body.name,
-  })
-    .then((topic) => {
-      if (topic) {
-        return res.status(200).json({
+
+  const existTopic = await Subject.findOne({ "topic.name": req.body.name});
+  if(existTopic){
+          return res.status(400).json({
           success: false,
           message: "Topic already exists",
         });
-      }
-      console.log(req.file);
-      subject
-        .addTopic(
-          req.body.name,
-          req.body.description,
-          req.file.filename,
-          req.file.id
-        )
-        .then((topic) => {
-          res.status(200).json({
-            success: true,
-            message: "Topic added Successfully",
-            data: topic,
-          });
-        })
-        .catch((err) => res.status(500).json(err));
-    })
-    .catch((err) => res.status(500).json(err));
+  }
+  subject.addTopic(req.body.name)
+    .then((topic)=>{
+      res.status(200).json({
+                  success: true,
+                  message: "Topic added Successfully",
+                  data: topic,
+                });
+    }).catch((err) => res.status(500).json({success: false, message: "Topic not added"}));
 });
 
 exports.getTopic = asyncHandler(async (req, res, next) => {
