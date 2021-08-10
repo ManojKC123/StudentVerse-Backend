@@ -21,17 +21,21 @@ const userSignup = asyncHandler(async (req, res) => {
     mobile: data.mobile,
     password: hash,
   });
-
-  const registered = await user.save();
-  if (registered) {
-    return res
-      .status(200)
-      .json({ success: true, message: "User Registered", data: data });
-  } else {
-    return res
-      .status(400)
-      .json({ success: false, message: "Register Failed", data: data });
-  }
+  user
+    .save()
+    .then((topic) => {
+      res.status(200).json({
+        success: true,
+        message: "User Registered Successfully!!!",
+        data: topic,
+      });
+    })
+    .catch((err) => {
+      res.status(400).json({
+        success: false,
+        message: err,
+      });
+    });
 });
 
 //--------------------------LOGIN-----------------
@@ -87,39 +91,51 @@ const getUser = asyncHandler(async (req, res, next) => {
   });
 });
 
-
-const findUser = asyncHandler(async(req, res, next) =>{
-  try{
-    const user = await User.findOne({_id: req.params.id});
+const findUser = asyncHandler(async (req, res, next) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id });
     res.status(200).json({
       success: true,
       data: user,
-    })
-  }
-  catch(error){
+    });
+  } catch (error) {
     next(error);
   }
-})
+});
 
 //--------------------------User Update-----------------
 const updateUser = asyncHandler(async (req, res, next) => {
+  const userForCheckpass = await User.findOne({ _id: req.user._id }).select(
+    "+password"
+  );
+  const compare = await userForCheckpass.matchPassword(req.body.password);
+  if (!compare) {
+    return res
+      .json({ success: false, message: "Incorrect Current Password" })
+      .status(503);
+  }
+  const hash = await bcrypt.hash(req.body.newPassword, 7);
+  console.log("requser", req.user._id, req.user);
   const user = await User.updateOne(
     { _id: req.user._id },
     {
-      email: data.email,
-      fname: data.fname,
-      lname: data.lname,
-      mobile: data.mobile,
-      // password: hash,
-      address: data.address,
-      // imageprof: image,
-      // userType: 'user',
+      email: req.body.email,
+      fname: req.body.fname,
+      lname: req.body.lname,
+      mobile: req.body.mobile,
+      address: req.body.address,
+      password: hash,
     },
     function (err, data) {
       if (err) {
         console.log("update profile error", err);
+        return res
+          .status(400)
+          .json({ message: "User Update Error", success: false });
       } else {
-        return res.status(200).json({ message: "Updated Successfully", data });
+        return res
+          .status(200)
+          .json({ message: "User Updated Successfully", data, success: true });
       }
     }
   );
@@ -148,7 +164,7 @@ const sendTokenResponse = (user, statusCode, res) => {
     .json({
       success: true,
       token,
-      message: "Login Successfull"
+      message: "Login Successfull",
     });
 };
 
@@ -158,5 +174,5 @@ module.exports = {
   Logout,
   getUser,
   updateUser,
-  findUser
+  findUser,
 };

@@ -23,8 +23,8 @@ const subjectSchema = new mongoose.Schema({
 });
 
 subjectSchema.methods = {
-    addTopic: function(name, description, pictureName, pictureId){
-        this.topic.push({name, description, pictureName, pictureId});
+    addTopic: function(name){
+        this.topic.push({name});
         return this.save();
     },
 

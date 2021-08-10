@@ -4,14 +4,14 @@ const bodyParser = require("body-parser");
 require("./config/db_connection.js");
 const cors = require("cors");
 const path = require("path");
-const methodOverride = require('method-override');
-const upload = require('./src/auth/image');
+const methodOverride = require("method-override");
+const upload = require("./src/auth/image");
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(methodOverride('_method'));
+app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
@@ -25,15 +25,15 @@ const answerRoutes = require("./src/routes/answer");
 const commentRoutes = require("./src/routes/comment");
 const voteRoutes = require("./src/routes/vote");
 const subjectRoutes = require("./src/routes/subject");
-const topicRoutes = require('./src/routes/topic');
-const chapterRoutes = require('./src/routes/chapter');
+const topicRoutes = require("./src/routes/topic");
+const chapterRoutes = require("./src/routes/chapter");
 app.use(userRoutes);
 app.use(postRoutes);
 app.use(answerRoutes);
 app.use(commentRoutes);
 app.use(voteRoutes);
 app.use(subjectRoutes(upload));
-app.use(topicRoutes(upload));
+// app.use(topicRoutes(upload));
 app.use(chapterRoutes(upload));
 
 const PORT = process.env.PORT || 5000;
