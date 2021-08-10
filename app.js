@@ -33,7 +33,7 @@ app.use(answerRoutes);
 app.use(commentRoutes);
 app.use(voteRoutes);
 app.use(subjectRoutes(upload));
-app.use(topicRoutes(upload));
+app.use(topicRoutes);
 app.use(chapterRoutes(upload));
 
 const PORT = process.env.PORT || 5000;
