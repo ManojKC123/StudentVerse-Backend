@@ -9,5 +9,5 @@ topicRouter.route('/topic')
     .get(getTopic);
 
 
-return topicRouter;
+module.exports =  topicRouter;
 
