@@ -26,10 +26,11 @@ exports.addAnswer = async (req, res, next) => {
     }
 
     try {
-        const { author } = req.user;
+        console.log(req.user)
+        const { id } = req.user;
         const { text } = req.body;
         const poster = await Post.findById(req.body.post);
-        const post = await poster.addAnswer(author, text);
+        const post = await poster.addAnswer(id, text);
 
         res.status(201).json({success: true, data: post, message:"Answer added Successfully"});
     } catch (error) {
