@@ -5,8 +5,24 @@ const ErrorResponse = require("../auth/ErrorResponse");
 
 
 exports.searchPost = asyncHandler(async (req, res, next) => {
-    const searchedField = req.query.question;
-    Post.fin({title: {$regex: searchedField, $options: '$i'}})
+    const searchedField = req.query.title;
+    Post.find({title: {$regex: searchedField, $options: '$i'}})
+        .then((data)=>{
+            res.send(data);
+        });
+});
+
+exports.searchTag = asyncHandler(async (req, res, next) => {
+    const searchedField = req.query.tags;
+    Post.find({tags: {$regex: searchedField, $options: '$i'}})
+        .then((data)=>{
+            res.send(data);
+        });
+});
+
+exports.searchUser = asyncHandler(async (req, res, next) => {
+    const searchedField = req.query.username;
+    User.find({username: {$regex: searchedField, $options: '$i'}})
         .then((data)=>{
             res.send(data);
         });

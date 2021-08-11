@@ -27,6 +27,7 @@ const voteRoutes = require("./src/routes/vote");
 const subjectRoutes = require("./src/routes/subject");
 const topicRoutes = require("./src/routes/topic");
 const chapterRoutes = require("./src/routes/chapter");
+const searchRoutes = require("./src/routes/search");
 app.use(userRoutes);
 app.use(postRoutes);
 app.use(answerRoutes);
@@ -35,6 +36,7 @@ app.use(voteRoutes);
 app.use(subjectRoutes(upload));
 app.use(topicRoutes);
 app.use(chapterRoutes(upload));
+app.use(searchRoutes);
 
 const PORT = process.env.PORT || 5000;
 
