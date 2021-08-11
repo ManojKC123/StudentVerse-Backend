@@ -165,6 +165,7 @@ const sendTokenResponse = (user, statusCode, res) => {
       success: true,
       token,
       message: "Login Successfull",
+      usertype: user.usertype,
     });
 };
 
