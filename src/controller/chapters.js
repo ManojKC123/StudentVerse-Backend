@@ -31,8 +31,8 @@ exports.addChapter = asyncHandler(async (req, res, next) => {
 });
 
 exports.getChapter = asyncHandler(async (req, res, next) => {
-    const subject = await Subject.findById(req.body.subject);
-    const topic = subject.topic.id(req.body.topic);
+    const subject = await Subject.findById(req.params.subject);
+    const topic = subject.topic.id(req.params.topic);
     if (!topic) {
         res.status(500).json({
             succes: false,

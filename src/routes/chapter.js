@@ -14,9 +14,8 @@ module.exports = (upload) => {
         });
     });
 
-    chapterRouter.route('/chapter')
-        .post(upload.single('picture'), addChapter)
-        .get(getChapter);
+    chapterRouter.route('/chapter').post(upload.single('picture'), addChapter)
+    chapterRouter.route('/chapter/:subject/:topic').get(getChapter);
 
     chapterRouter.route('/chapter/:pictureName')
         .get((req, res, next) => {
