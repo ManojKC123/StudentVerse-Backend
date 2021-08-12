@@ -5,12 +5,12 @@ const ErrorResponse = require("../auth/ErrorResponse");
 
 
 exports.searchPost = asyncHandler(async (req, res, next) => {
-    const searchReg = new RegExp(req.query.title, 'im');
+    const searchReg = new RegExp(req.query.question, 'im');
     const posts = await Post.find({$or: [{title: searchReg}, {body: searchReg}]})
-    if(!posts){
+    if(!posts.length){
         res.status(500).json({
             succes: false,
-            message: "No Posts Found",
+            message: "No data found for " + req.query.question,
         });
     }
     res.status(200).json({
@@ -18,26 +18,38 @@ exports.searchPost = asyncHandler(async (req, res, next) => {
         count: posts.length,
         data: posts
     });
-    // Post.find({title: {$regex: searchReg, $options: '$i'}})
-    //     .then((data)=>{
-    //         res.send(data);
-    //     });
 });
 
 // User.find({$or:[{region: "NA"},{sector:"Some Sector"}]}
 
 exports.searchTag = asyncHandler(async (req, res, next) => {
-    const searchedField = req.query.tags;
-    Post.find({tags: {$regex: searchedField, $options: '$i'}})
-        .then((data)=>{
-            res.send(data);
+    const searchedField = new RegExp(req.query.tags, 'im');
+    const tags = await Post.find({tags: searchedField})
+    if(!tags.length){
+        res.status(500).json({
+            succes: false,
+            message: "No data found for " + req.query.tags + " tags",
         });
+    }
+    res.status(200).json({
+        success: true,
+        count: tags.length,
+        data: tags
+    });
 });
 
 exports.searchUser = asyncHandler(async (req, res, next) => {
-    const searchedField = req.query.username;
-    User.find({username: {$regex: searchedField, $options: '$i'}})
-        .then((data)=>{
-            res.send(data);
+    const searchedField = new RegExp(req.query.username, 'im');
+    const user = await User.find({username:searchedField})
+    if(!user.length){
+        res.status(500).json({
+            succes: false,
+            message: "No data found for " + req.query.username,
         });
+    }
+    res.status(200).json({
+        success: true,
+        count: user.length,
+        data: user
+    });
 });
