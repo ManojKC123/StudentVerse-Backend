@@ -20,8 +20,6 @@ exports.searchPost = asyncHandler(async (req, res, next) => {
     });
 });
 
-// User.find({$or:[{region: "NA"},{sector:"Some Sector"}]}
-
 exports.searchTag = asyncHandler(async (req, res, next) => {
     const searchedField = new RegExp(req.query.tags, 'im');
     const tags = await Post.find({tags: searchedField})
@@ -39,8 +37,8 @@ exports.searchTag = asyncHandler(async (req, res, next) => {
 });
 
 exports.searchUser = asyncHandler(async (req, res, next) => {
-    const searchedField = new RegExp(req.query.username, 'im');
-    const user = await User.find({username:searchedField})
+    const searchedField = new RegExp(req.query.name, 'im');
+    const user = await User.find({$or:[{username: searchedField},{fname:searchedField}, {lname: searchedField}]})
     if(!user.length){
         res.status(500).json({
             succes: false,
