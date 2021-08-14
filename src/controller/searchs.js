@@ -10,7 +10,7 @@ exports.searchPost = asyncHandler(async (req, res, next) => {
     if(!posts.length){
         res.status(500).json({
             succes: false,
-            message: "No data found for " + req.query.question,
+            message: "No qeustions found for " + req.query.question,
         });
     }
     else{
@@ -46,7 +46,7 @@ exports.searchUser = asyncHandler(async (req, res, next) => {
     if(!user.length){
         res.status(500).json({
             succes: false,
-            message: "No data found for " + req.query.username,
+            message: "No username found for " + req.query.username,
         });
     }
     else{
