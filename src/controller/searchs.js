@@ -9,7 +9,7 @@ exports.searchPost = asyncHandler(async (req, res, next) => {
     const posts = await Post.find({$or: [{title: searchReg}, {body: searchReg}]})
     if(!posts.length){
         res.status(500).json({
-            succes: false,
+            success: false,
             message: "No qeustions found for " + req.query.question,
         });
     }
