@@ -10,7 +10,7 @@ exports.searchPost = asyncHandler(async (req, res, next) => {
     if(!posts.length){
         res.status(500).json({
             success: false,
-            message: "No qeustions found for " + req.query.question,
+            message: "No questions found for " + req.query.question,
         });
     }
     else{
@@ -27,7 +27,7 @@ exports.searchTag = asyncHandler(async (req, res, next) => {
     const tags = await Post.find({tags: searchedField})
     if(!tags.length){
         res.status(500).json({
-            succes: false,
+            success: false,
             message: "No data found for " + req.query.tags + " tags",
         });
     }
@@ -45,7 +45,7 @@ exports.searchUser = asyncHandler(async (req, res, next) => {
     const user = await User.find({$or:[{username: searchedField},{fname:searchedField}, {lname: searchedField}]})
     if(!user.length){
         res.status(500).json({
-            succes: false,
+            success: false,
             message: "No username found for " + req.query.username,
         });
     }
