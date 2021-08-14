@@ -13,11 +13,13 @@ exports.searchPost = asyncHandler(async (req, res, next) => {
             message: "No data found for " + req.query.question,
         });
     }
+    else{
     res.status(200).json({
         success: true,
         count: posts.length,
         data: posts
     });
+    }
 });
 
 exports.searchTag = asyncHandler(async (req, res, next) => {
@@ -29,11 +31,13 @@ exports.searchTag = asyncHandler(async (req, res, next) => {
             message: "No data found for " + req.query.tags + " tags",
         });
     }
+    else{
     res.status(200).json({
         success: true,
         count: tags.length,
         data: tags
     });
+    }  
 });
 
 exports.searchUser = asyncHandler(async (req, res, next) => {
@@ -45,9 +49,11 @@ exports.searchUser = asyncHandler(async (req, res, next) => {
             message: "No data found for " + req.query.username,
         });
     }
+    else{
     res.status(200).json({
         success: true,
         count: user.length,
         data: user
     });
+}
 });
