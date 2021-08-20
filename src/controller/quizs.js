@@ -6,8 +6,9 @@ const ErrorResponse = require("../auth/ErrorResponse");
 exports.addQuiz = asyncHandler(async (req, res, next) => {
     if (req.params.chapter) {
         const chapter = req.params.chapter;
-        const { question, options, answer } = req.body;
+        const {name, question, options, answer } = req.body;
         let quiz = await new Quiz({
+            name,
             question,
             options,
             answer,
@@ -33,7 +34,7 @@ exports.loadQuiz = asyncHandler(async (req, res, next) => {
 
 exports.loadchapterQuiz = asyncHandler(async (req, res, next)=>{
     const quiz = await Quiz.find({"chapter": req.params.chapter});
-    console.log(quiz.length)
+    
     res.status(200).json({
         success: true,
         count: quiz.length,
