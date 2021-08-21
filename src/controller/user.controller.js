@@ -114,8 +114,6 @@ const updateUser = asyncHandler(async (req, res, next) => {
       .json({ success: false, message: "Incorrect Current Password" })
       .status(503);
   }
-  const hash = await bcrypt.hash(req.body.newPassword, 7);
-  console.log("requser", req.user._id, req.user);
   const user = await User.updateOne(
     { _id: req.user._id },
     {
@@ -124,7 +122,6 @@ const updateUser = asyncHandler(async (req, res, next) => {
       lname: req.body.lname,
       mobile: req.body.mobile,
       address: req.body.address,
-      password: hash,
     },
     function (err, data) {
       if (err) {
@@ -136,6 +133,39 @@ const updateUser = asyncHandler(async (req, res, next) => {
         return res
           .status(200)
           .json({ message: "User Updated Successfully", data, success: true });
+      }
+    }
+  );
+});
+
+const updatePassword = asyncHandler(async (req, res, next) => {
+  const userForCheckpass = await User.findOne({ _id: req.user._id }).select(
+    "+password"
+  );
+  const compare = await userForCheckpass.matchPassword(req.body.password);
+  if (!compare) {
+    return res
+      .json({ success: false, message: "Incorrect Current Password" })
+      .status(503);
+  }
+  const hash = await bcrypt.hash(req.body.newPassword, 7);
+  const user = await User.updateOne(
+    { _id: req.user._id },
+    {
+      password: hash,
+    },
+    function (err, data) {
+      if (err) {
+        console.log("update Password error", err);
+        return res
+          .status(400)
+          .json({ message: "User Password Error", success: false });
+      } else {
+        return res.status(200).json({
+          message: "Password Updated Successfully",
+          data,
+          success: true,
+        });
       }
     }
   );
@@ -175,5 +205,6 @@ module.exports = {
   Logout,
   getUser,
   updateUser,
+  updatePassword,
   findUser,
 };
