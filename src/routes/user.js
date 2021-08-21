@@ -15,6 +15,7 @@ router.get("/profile", guard, userController.getUser);
 router.get("/user/:id", userController.findUser);
 router.put("/user/update", guard, userController.updateUser);
 router.put("/profile/update", guard, userController.updateUser);
+router.put("/profile/updatePassword", guard, userController.updatePassword);
 router.get("/logout", userController.Logout);
 
 module.exports = router;
