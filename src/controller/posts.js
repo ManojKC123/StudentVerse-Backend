@@ -6,9 +6,7 @@ const {body, validationResult} = require('express-validator');
 
 // -----------------FIND all Post-------------------
 exports.loadPosts = asyncHandler(async(req, res, next) => {
-    const post = await Post.find({});
-    console.log(post[0].createdAt)
-    console.log(post[0].createdAt.toString())
+    const post = await Post.find().sort({'createdAt': -1});
     res.status(201).json({
         success: true,
         count: post.length,

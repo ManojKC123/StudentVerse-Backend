@@ -10,7 +10,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -28,6 +28,7 @@ const subjectRoutes = require("./src/routes/subject");
 const topicRoutes = require("./src/routes/topic");
 const chapterRoutes = require("./src/routes/chapter");
 const searchRoutes = require("./src/routes/search");
+const quizRoutes = require("./src/routes/quiz");
 app.use(userRoutes);
 app.use(postRoutes);
 app.use(answerRoutes);
@@ -37,6 +38,7 @@ app.use(subjectRoutes(upload));
 app.use(topicRoutes);
 app.use(chapterRoutes(upload));
 app.use(searchRoutes);
+app.use(quizRoutes);
 
 const PORT = process.env.PORT || 5000;
 
