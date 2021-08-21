@@ -11,7 +11,7 @@ const quizSchema = new Schema({
     options: [{type: String}],
 
     answer: {
-      type: Number,
+      type: String,
     },
     chapter: {
         type: String,

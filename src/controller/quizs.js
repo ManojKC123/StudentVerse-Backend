@@ -1,5 +1,4 @@
 const Quiz = require('../model/quiz');
-const Subject = require('../model/subject');
 const asyncHandler = require("../auth/async");
 const ErrorResponse = require("../auth/ErrorResponse");
 
