@@ -24,25 +24,49 @@ exports.addScore = asyncHandler(async(req, res, next)=>{
 });
 
 
-// exports.checkScore = asyncHandler(async(req,res,next)=>{
-//     const quizId = req.body.quizid;
-//     const quiz = Quiz.findOne({_id: quizId})
-//     var score = 0;
-//     const option = req.body.option;
-//     const answer = quiz.answer;
-//     if (option === answer){
-//         score = score + 1;
-//     }
-//     else if (option === answer){
-//         score = score -1;
-//     }
-//     const score = await Score.find({
-//         "quizname": 
-//     })
-//     if (score){
-//         Score.updateOne({quizname: })
-//     }
-// })
+exports.checkScore = asyncHandler(async(req,res,next)=>{
+    
+    const userId = req.user;
+    const {quizname, answer, time, option} = req.body;
+    
+    var score = 0;
+    
+    
+    const Scores = await Score.find({ "quizname": quizname, "userId": userId });
+    if (option === answer){
+        score = score + 1;
+        console.log("it is here 2", score);
+    }
+    else if (option != answer){
+        score = score -1;
+    }
+
+    console.log(Scores)
+    if (Scores){
+        const updatedScore = Score.updateOne({"quizname": quizname, "userId": userId},{score: score, time: time})
+        if(updatedScore){
+            res.status(200).json({ success: true,
+                message: "Score added"})
+        }
+        else{
+            res.status(500).json({ message: "Score not added" })
+        }
+    }
+    else{
+        let scores = await new Score({
+            score,
+            time,
+            quizname,
+            userId
+        });
+        scores.save()
+                .then((score) => {
+                    res.status(200).json({ success: true,
+                         message: "Score added" })
+                })
+                .catch(err => res.status(500).json(err));
+    }
+})
 
 exports.fetchUserScore = asyncHandler(async(req, res, next)=>{
     Score.find({userId: req.params.userId}, (err,score) =>{
