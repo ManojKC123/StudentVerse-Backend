@@ -5,8 +5,9 @@ const ErrorResponse = require("../auth/ErrorResponse");
 
 exports.addScore = asyncHandler(async(req, res, next)=>{
     const {score, quizname, time} = req.body;
-    const {userId} = req.user;
-
+    const {id} = req.user;
+    const userId = id;
+    console.log(req.body);
     let scores = await new Score({
         score,
         time,

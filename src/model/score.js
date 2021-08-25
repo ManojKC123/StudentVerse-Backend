@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const scoreSchema = new mongoose.Schema({
   score: { type: Number },
-  time: {type: Number},
+  time: {type: String},
   date: { type: Date, default: Date.now},
   quizname: {type: String},
   userId: {

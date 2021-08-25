@@ -34,6 +34,7 @@ exports.addPost = asyncHandler(async (req, res, next)=>{
         const errors = result.array({ onlyFirstError: true});
         return res.status(422).json({errors});
     }
+    console.log(req.body)
     const {title, tags, body} = req.body;
     const author = req.user.id;
     const post = await Post.create({
