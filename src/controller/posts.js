@@ -47,6 +47,40 @@ exports.addPost = asyncHandler(async (req, res, next)=>{
 });
 
 
+exports.loadUserPost = asyncHandler(async (req, res, next)=>{
+    const post = await Post.find({author: req.user._id});
+    if(post.length === 0){
+        return res.status(404).json({success:false, message: "User has not posted any queries"});
+    }
+    else {
+        
+    res.status(200).json({
+        success: true,
+        count: post.length,
+        data: post
+    });
+}
+});
+
+exports.loadOtherPost = asyncHandler(async(req,res,next)=>{
+    
+});
+
+
+exports.updatePost = asyncHandler(async(req,res,next)=>{
+    const {id, title, body, tags} = req.body;
+    Post.updateOne({_id: id},{
+        title: title, body: body, tags: tags
+    })
+    .then(function (result) {
+        res.status(200).json({ message: "Post Updated" })
+    })
+    .catch(function (err) {
+        res.status(500).json({ message: "Update failure" })
+    })
+});
+
+
 
 // -----------------Delete Question-------------------
 exports.removePost = asyncHandler(async (req, res, next)=>{
