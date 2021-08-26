@@ -5,7 +5,7 @@ const subjectRouter = express.Router();
 const { guard } = require("../auth/auth");
 
 module.exports = (upload) => {
-    const connect = mongoose.createConnection(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+    const connect = mongoose.createConnection(process.env.DB_URL, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 
     let gfs;
     connect.once('open', () => {

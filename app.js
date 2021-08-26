@@ -31,7 +31,7 @@ const searchRoutes = require("./src/routes/search");
 const quizRoutes = require("./src/routes/quiz");
 const scoreRoutes = require("./src/routes/score");
 const paperRoutes = require("./src/routes/pastpaper");
-app.use(userRoutes);
+app.use(userRoutes(upload));
 app.use(postRoutes);
 app.use(answerRoutes);
 app.use(commentRoutes);

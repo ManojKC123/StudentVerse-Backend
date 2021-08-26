@@ -141,6 +141,17 @@ const updateUser = asyncHandler(async (req, res, next) => {
   );
 });
 
+const updatePicture = asyncHandler(async(req,res,next) =>{
+  
+  const update = await User.updateOne({"_id": req.user._id},{profilename: req.file.filename, profileId: req.file.id})
+  if(update){
+    res.status(200).json({ success: true, message: "Profile picture updated"})
+  }
+  else{
+    res.status(500).json({ success: false, message: "Picture not updated"})
+  }
+});
+
 const sendTokenResponse = (user, statusCode, res) => {
   const token = user.getSignedJwtToken();
 
@@ -176,4 +187,5 @@ module.exports = {
   getUser,
   updateUser,
   findUser,
+  updatePicture
 };
