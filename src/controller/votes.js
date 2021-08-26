@@ -38,14 +38,3 @@ exports.unvote = asyncHandler(async(req,res) => {
         return res.json({success: true, message:"Answer Vote Cancelled", data: answerVote});
     }
 })
-
-
-exports.showVote = asyncHandler(async(req,res,next)=>{
-    const {id} = req.user;
-    const { post, answer} = req.body;
-    const poster = await Post.findById(post);
-    const findanswer = poster.answer.id(answer);
-    const votes = findanswer
-    console.log(findanswer)
-    return res.json({success: true, data: findanswer})
-})
