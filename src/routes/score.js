@@ -5,7 +5,7 @@ const {fetchUserScore, addScore, checkScore} = require("../controller/scores");
 const { guard } = require("../auth/auth");
 
 router.post('/score', guard, addScore);
-router.get('./score', fetchUserScore);
+router.get('/score', guard, fetchUserScore);
 router.post('/scoreAdd', guard, checkScore);
 
 module.exports = router;
