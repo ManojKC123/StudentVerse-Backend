@@ -90,10 +90,10 @@ exports.updatePost = asyncHandler(async(req,res,next)=>{
         title: title, body: body, tags: tags
     })
     .then(function (result) {
-        res.status(200).json({ message: "Post Updated" })
+        res.status(200).json({success: true, message: "Post Updated" })
     })
     .catch(function (err) {
-        res.status(500).json({ message: "Update failure" })
+        res.status(500).json({ success: false, message: "Update failure" })
     })
 });
 
