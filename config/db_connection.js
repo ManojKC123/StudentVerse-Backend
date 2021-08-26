@@ -5,3 +5,4 @@ await mongoose.connect(
   { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true },
   () => console.log('Connected to MongoDB!')
 );
+
