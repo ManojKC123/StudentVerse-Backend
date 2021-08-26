@@ -39,6 +39,7 @@ const userSchema = mongoose.Schema(
     },
     profilename: {
       type: String,
+      default: '8e184c9ab37bb6be7ede3f8eca16f86f.png'
     },
     profileId:{
       type: String,

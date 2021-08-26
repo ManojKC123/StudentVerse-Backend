@@ -169,7 +169,7 @@ const updatePassword = asyncHandler(async (req, res, next) => {
     });
   });
   const updatePicture = asyncHandler(async (req, res, next) => {
-
+    console.log(req.file)
     const update = await User.updateOne({ "_id": req.user._id }, { profilename: req.file.filename, profileId: req.file.id })
     if (update) {
       res.status(200).json({ success: true, message: "Profile picture updated" })

@@ -34,7 +34,7 @@ router.route('/userprofile/:picturename').get((req,res,next)=>{
         });
     }
 
-    if (files[0].contentType === 'image/jpeg' || files[0].contentType === 'image/png' || files[0].contentType === 'image/svg+xml') {
+    if (files[0].contentType === 'image/jpeg' || files[0].contentType === 'image/jpg' || files[0].contentType === 'image/png' || files[0].contentType === 'image/svg+xml') {
         // render image to browser
         gfs.openDownloadStreamByName(req.params.picturename).pipe(res);
     } else {
