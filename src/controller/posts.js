@@ -17,14 +17,19 @@ exports.loadPosts = asyncHandler(async(req, res, next) => {
 // -----------------FIND Post BY ID-------------------
 exports.loadPostsById = asyncHandler(async (req, res, next) =>{
     const post = await Post.findById(req.params.id);
-
+    
+    
     if (!post){
-        return next(new ErrorResponse("Post not Found"), 404);
+        return res.status(404).json({success:false, message: "No Post Found"});
     }
-    res.status(200).json({
-        success: true,
-        data: post
+    else if (post){
+        post.views = post.views + 1;
+        await post.save();
+        res.status(200).json({
+            success: true,
+            data: post
     });
+    }
 });
 
 // -----------------Create Question-------------------
@@ -103,6 +108,6 @@ exports.removePost = asyncHandler(async (req, res, next)=>{
     }
 
     await post.remove();
-    res.status(200).json({success: true, count:post.length, data: {}, message: "Post deleted Successfully"});
+    res.status(200).json({success: true, message: "Post deleted Successfully"});
 });
 
