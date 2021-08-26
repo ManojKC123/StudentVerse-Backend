@@ -2,29 +2,16 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const quizSchema = new Schema({
+    name: {
+      type: String
+    },
     question: {
         type: String
     },
     options: [{type: String}],
 
     answer: {
-      type: Number,
-    },
-    duration:{
-        hours : {
-            type : Number,
-            default: 0
-          },
-    
-          minutes : {
-            type : Number,
-            default: 0
-          },
-    
-          seconds : {
-            type : Number,
-            default: 0
-          }
+      type: String,
     },
     chapter: {
         type: String,

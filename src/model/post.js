@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 const answerSchema = require('./answer');
 const voteSchema = require('./vote');
 
+const domPurifier = require('dompurify');
+const { JSDOM } = require('jsdom');
+const htmlPurify = domPurifier(new JSDOM().window);
+
+const stripHtml = require('string-strip-html');
+
 const postSchema = new mongoose.Schema({
     author: {
         type: mongoose.Schema.Types.ObjectId,
@@ -25,6 +31,13 @@ const postSchema = new mongoose.Schema({
 });
 
 postSchema.set('toJSON', {getters:true});
+
+postSchema.pre('validate', function (next){
+    if(this.body){
+        this.body = htmlPurify.sanitize(this.body);
+    }
+    next();
+})
 
 postSchema.methods = {
     vote: function (user, vote){
