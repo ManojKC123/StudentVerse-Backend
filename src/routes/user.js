@@ -25,7 +25,7 @@ router.route("/picture/update").put( guard, upload.single('picture'), userContro
 router.get("/logout", userController.Logout);
 
 
-router.route('/userprofile/:picturename').get(guard, (req,res,next)=>{
+router.route('/userprofile/:picturename').get((req,res,next)=>{
   gfs.find({ filename: req.params.picturename }).toArray((err, files) =>{
     if (!files[0] || files.length === 0){
         return res.status(200).json({

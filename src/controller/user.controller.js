@@ -117,7 +117,6 @@ const updateUser = asyncHandler(async (req, res, next) => {
   const user = await User.updateOne(
     { _id: req.user._id },
     {
-      email: req.body.email,
       fname: req.body.fname,
       lname: req.body.lname,
       mobile: req.body.mobile,
