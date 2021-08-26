@@ -104,7 +104,7 @@ exports.removePost = asyncHandler(async (req, res, next)=>{
     const post = await Post.findById(req.params.id);
 
     if(!post){
-        return next(new ErrorResponse('No Post Found'), 404);
+        return res.status(404).json({ success: false, message: "No post found" })
     }
 
     await post.remove();
