@@ -72,6 +72,6 @@ exports.checkScore = asyncHandler(async(req,res,next)=>{
 exports.fetchUserScore = asyncHandler(async(req, res, next)=>{
     Score.find({userId: req.params.userId}, (err,score) =>{
         res.status(200).json({ success: true, data: score})
-    }).sort({ date: -1})
+    }).sort({ date: -1}).limit(10)
     .catch(err => res.status(500).json(err));
 })
