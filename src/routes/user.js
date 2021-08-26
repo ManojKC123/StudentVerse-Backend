@@ -19,7 +19,6 @@ router.post("/signup", userController.userSignup);
 router.post("/login", userController.userLogin);
 router.get("/profile", guard, userController.getUser);
 router.get("/user/:id", userController.findUser);
-router.put("/user/update", guard, userController.updateUser);
 router.put("/profile/update", guard, userController.updateUser);
 router.put("/profile/updatePassword", guard, userController.updatePassword);
 router.route("/picture/update").put( guard, upload.single('picture'), userController.updatePicture)
