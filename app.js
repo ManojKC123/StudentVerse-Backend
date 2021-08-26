@@ -30,6 +30,7 @@ const chapterRoutes = require("./src/routes/chapter");
 const searchRoutes = require("./src/routes/search");
 const quizRoutes = require("./src/routes/quiz");
 const scoreRoutes = require("./src/routes/score");
+const paperRoutes = require("./src/routes/pastpaper");
 app.use(userRoutes);
 app.use(postRoutes);
 app.use(answerRoutes);
@@ -41,6 +42,7 @@ app.use(chapterRoutes(upload));
 app.use(searchRoutes);
 app.use(quizRoutes);
 app.use(scoreRoutes);
+app.use(paperRoutes);
 
 const PORT = process.env.PORT || 5000;
 
