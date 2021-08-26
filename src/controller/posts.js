@@ -68,7 +68,7 @@ exports.loadUserPost = asyncHandler(async (req, res, next)=>{
 });
 
 exports.loadOtherPost = asyncHandler(async(req,res,next)=>{
-    const {id} = req.body;
+    const {id} = req.params;
     const post = await Post.find({author: id});
     if(post.length === 0){
         return res.status(404).json({success:false, message: "User has not posted any queries"});

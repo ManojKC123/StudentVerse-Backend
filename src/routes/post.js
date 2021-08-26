@@ -10,7 +10,7 @@ router.get("/post/:id", loadPostsById);
 router.post("/addQuestion", guard, addPost);
 router.get("/userPost", guard, loadUserPost);
 router.put("/post/update", guard, updatePost);
-router.get("/otheruser/post", guard, loadOtherPost);
+router.get("/otheruser/post/:id", guard, loadOtherPost);
 router.delete("/post/:id", guard, removePost);
 
 module.exports = router;
