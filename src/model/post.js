@@ -42,7 +42,6 @@ postSchema.pre('validate', function (next){
 postSchema.methods = {
     vote: function (user, vote){
         const existingVote = this.votes.find((v)=> v.user._id.equals(user));
-        console.log("this is here", user , vote)
         if(existingVote){
             this.score -= existing.Vote;
             if (vote == 0 ){
@@ -55,7 +54,6 @@ postSchema.methods = {
         }
         else if(vote !== 0){
              this.score += vote;
-             console.log("This is score", this.score);
              this.votes.push({user, vote});   
              return this.save;
         }

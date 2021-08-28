@@ -6,7 +6,7 @@ const { body, validationResult } = require('express-validator');
 exports.addChapter = asyncHandler(async (req, res, next) => {
     const subject = await Subject.findOne({ _id: req.body.subject });
     const topic = await subject.topic.id(req.body.topic);
-    console.log(topic);
+    
     
     const addchapter = await topic.addChapter(req.body.name,
         req.body.content, req.file.filename,

@@ -124,7 +124,6 @@ const updateUser = asyncHandler(async (req, res, next) => {
     },
     function (err, data) {
       if (err) {
-        console.log("update profile error", err);
         return res
           .status(400)
           .json({ message: "User Update Error", success: false });
@@ -155,7 +154,6 @@ const updatePassword = asyncHandler(async (req, res, next) => {
     },
     function (err, data) {
       if (err) {
-        console.log("update Password error", err);
         return res
           .status(400)
           .json({ message: "User Password Error", success: false });
@@ -169,7 +167,6 @@ const updatePassword = asyncHandler(async (req, res, next) => {
     });
   });
   const updatePicture = asyncHandler(async (req, res, next) => {
-    console.log(req.file)
     const update = await User.updateOne({ "_id": req.user._id }, { profilename: req.file.filename, profileId: req.file.id })
     if (update) {
       res.status(200).json({ success: true, message: "Profile picture updated" })
