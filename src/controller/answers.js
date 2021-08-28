@@ -26,7 +26,6 @@ exports.addAnswer = async (req, res, next) => {
     }
 
     try {
-        console.log(req.user)
         const { id } = req.user;
         const { text } = req.body;
         const poster = await Post.findById(req.body.post);
