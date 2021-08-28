@@ -68,11 +68,12 @@ exports.checkScore = asyncHandler(async(req,res,next)=>{
 
 exports.fetchUserScore = asyncHandler(async(req, res, next)=>{
     Score.find({userId: req.user._id}, (err,score) =>{
-       if(score){
-        res.status(200).json({ success: true, count: score.length ,data: score})
+       if(score.length === 0){
+        res.status(500).json({ success: false, message: "No Scores available"})
+        
        }
        else{
-        res.status(500).json({ success: false, message: "No Scores available", data: err})
+        res.status(200).json({ success: true, count: score.length ,data: score})
        }
     }).sort({ date: -1}).limit(10)
     .catch(err => res.status(500).json(err));
