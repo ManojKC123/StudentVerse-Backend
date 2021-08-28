@@ -12,7 +12,7 @@ exports.addTopic = asyncHandler(async (req, res, next) => {
           message: "Topic already exists",
         });
   }
-  subject.addTopic(req.body.name)
+  subject.addTopic(req.body.name, req.body.description)
     .then((topic)=>{
       res.status(200).json({
                   success: true,

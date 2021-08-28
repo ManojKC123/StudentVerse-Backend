@@ -4,6 +4,7 @@ const chapterSchema = require('./chapter');
 
 const topicSchema = new schema({
     name: {type: String, required: [true, "Enter a topic name"]},
+    description: {type: String},
     chapter: [chapterSchema]
 });
 
