@@ -15,18 +15,6 @@ exports.addQuiz = asyncHandler(async (req, res, next) => {
         else{
             return res.status(500).json({success:false, message: "Quiz not added"});
         }        
-        // let quiz = await new Quiz({
-        //     name,
-        //     question,
-        //     options,
-        //     answer,
-        //     chapter
-        // });
-        // quiz.save()
-        //     .then((quiz) => {
-        //         res.status(200).json({ success: true, message: "Quiz added", data: quiz })
-        //     })
-        //     .catch(err => res.status(500).json(err));
 
     }
 });
