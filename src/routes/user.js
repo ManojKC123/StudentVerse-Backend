@@ -65,7 +65,7 @@ router.post("/signup",[
         .withMessage('cannot be blank')
 
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,15}$/)
-        .withMessage('atleast 6 characters, one uppercase, one number and a special character'),
+        .withMessage('6-15 characters, one uppercase, one number and a special character'),
     
     
 ], userController.userSignup);
