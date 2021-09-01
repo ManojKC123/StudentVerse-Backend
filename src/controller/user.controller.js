@@ -5,37 +5,45 @@ const asyncHandler = require("../auth/async");
 const ErrorResponse = require("../auth/ErrorResponse");
 const avatar = require("avatar-initials");
 // const jwt = require("jsonwebtoken");
+const { validationResult } = require('express-validator')
 
 //--------------------------REGISTER USER-----------------
 const userSignup = asyncHandler(async (req, res) => {
   const data = req.body;
   const password = data.password;
 
-  const hash = await bcrypt.hash(password, 7);
-  const uNameE = data.email.substring(0, data.email.indexOf("@"));
-  let user = new User({
-    fname: data.fname,
-    lname: data.lname,
-    email: data.email,
-    username: uNameE,
-    mobile: data.mobile,
-    password: hash,
-  });
-  user
-    .save()
-    .then((topic) => {
-      res.status(200).json({
-        success: true,
-        message: "User Registered Successfully!!!",
-        data: topic,
-      });
-    })
-    .catch((err) => {
-      res.status(400).json({
-        success: false,
-        message: err,
-      });
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = errors.array({ onlyFirstError: true })
+    res.status(422).json({ error: error })
+  }
+  else {
+    const hash = await bcrypt.hash(password, 7);
+    const uNameE = data.email.substring(0, data.email.indexOf("@"));
+    let user = new User({
+      fname: data.fname,
+      lname: data.lname,
+      email: data.email,
+      username: uNameE,
+      mobile: data.mobile,
+      password: hash,
     });
+    user
+      .save()
+      .then((topic) => {
+        res.status(200).json({
+          success: true,
+          message: "User Registered Successfully!!!",
+          data: topic,
+        });
+      })
+      .catch((err) => {
+        res.status(400).json({
+          success: false,
+          message: err,
+        });
+      });
+  }
 });
 
 //--------------------------LOGIN-----------------
@@ -44,7 +52,7 @@ const userLogin = asyncHandler(async (req, res, next) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return next(new ErrorResponse("Please provide username and password"), 400);
+    return res.status(422).json({ message: "please provide username and password" })
   }
 
   // Check user
@@ -52,20 +60,23 @@ const userLogin = asyncHandler(async (req, res, next) => {
   //because in password field we have set the property select:false , but here we need as password so we added + sign
 
   if (!user) {
-    res.status(201).json({
+    console.log("its here")
+    return res.status(201).json({
       success: false,
       message: "Invalid credentails user",
     });
   }
-
-  const compare = await user.matchPassword(password);
-  if (!compare) {
-    res.status(201).json({
-      success: false,
-      message: "Invalid credentails",
-    });
-  } else {
-    sendTokenResponse(user, 200, res);
+  else if (user) {
+    console.log("its here1")
+    const compare = await user.matchPassword(password);
+    if (!compare) {
+      return res.status(201).json({
+        success: false,
+        message: "Invalid credentails",
+      });
+    } else {
+      sendTokenResponse(user, 200, res);
+    }
   }
 });
 
@@ -165,52 +176,52 @@ const updatePassword = asyncHandler(async (req, res, next) => {
         });
       }
     });
-  });
-  const updatePicture = asyncHandler(async (req, res, next) => {
-    const update = await User.updateOne({ "_id": req.user._id }, { profilename: req.file.filename, profileId: req.file.id })
-    if (update) {
-      res.status(200).json({ success: true, message: "Profile picture updated" })
-    }
-    else {
-      res.status(500).json({ success: false, message: "Picture not updated" })
-    }
-  });
+});
+const updatePicture = asyncHandler(async (req, res, next) => {
+  const update = await User.updateOne({ "_id": req.user._id }, { profilename: req.file.filename, profileId: req.file.id })
+  if (update) {
+    res.status(200).json({ success: true, message: "Profile picture updated" })
+  }
+  else {
+    res.status(500).json({ success: false, message: "Picture not updated" })
+  }
+});
 
-  const sendTokenResponse = (user, statusCode, res) => {
-    const token = user.getSignedJwtToken();
+const sendTokenResponse = (user, statusCode, res) => {
+  const token = user.getSignedJwtToken();
 
-    const options = {
-      //Cookie will expire in 30 days
-      expires: new Date(
-        Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-      ),
-      httpOnly: true,
-    };
-
-    // Cookie security is false .if you want https then use this code. do not use in development time
-    // if (process.env.NODE_ENV === "proc") {
-    //   options.secure = true;
-    // }
-
-    //we have created a cookie with a token
-    res
-      .status(statusCode)
-      .cookie("token", token, options) // key , value ,options
-      .json({
-        success: true,
-        token,
-        message: "Login Successfull",
-        usertype: user.usertype,
-      });
+  const options = {
+    //Cookie will expire in 30 days
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
   };
 
-  module.exports = {
-    userSignup,
-    userLogin,
-    Logout,
-    getUser,
-    updateUser,
-    updatePassword,
-    findUser,
-    updatePicture
-  }
+  // Cookie security is false .if you want https then use this code. do not use in development time
+  // if (process.env.NODE_ENV === "proc") {
+  //   options.secure = true;
+  // }
+
+  //we have created a cookie with a token
+  res
+    .status(statusCode)
+    .cookie("token", token, options) // key , value ,options
+    .json({
+      success: true,
+      token,
+      message: "Login Successfull",
+      usertype: user.usertype,
+    });
+};
+
+module.exports = {
+  userSignup,
+  userLogin,
+  Logout,
+  getUser,
+  updateUser,
+  updatePassword,
+  findUser,
+  updatePicture
+}
