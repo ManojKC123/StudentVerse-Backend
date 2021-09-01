@@ -28,6 +28,7 @@ const postSchema = new mongoose.Schema({
     votes: [voteSchema],
     views: {type: Number, default: 0},
     createdAt: {type:Date, default: Date.now},
+    censored:{type:Boolean, default: false}
 });
 
 postSchema.set('toJSON', {getters:true});

@@ -9,7 +9,7 @@ exports.addPaper = asyncHandler(async(req,res,next)=>{
             question, year, chapter
         });
         if(paper){
-            res.status(200).json({success: true, message: "Past paper added", data: paper})
+           return res.status(200).json({success: true, message: "Past paper added", data: paper})
         }
         else{
             return res.status(500).json({success:false, message: "Paper not added"});

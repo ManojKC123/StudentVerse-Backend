@@ -15,7 +15,7 @@ const userSignup = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const error = errors.array({ onlyFirstError: true })
-    res.status(422).json({ error: error })
+    return res.status(422).json({ error: error })
   }
   else {
     const hash = await bcrypt.hash(password, 7);
