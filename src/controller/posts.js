@@ -44,7 +44,6 @@ exports.addPost = asyncHandler(async (req, res, next) => {
         const { title, tags, body } = req.body;
         if(profanity.exists(title) || profanity.exists(body)){
             censored = true
-            console.log(censored)
         }
         const cleartitle = profanity.censor(title);
         const clearbody = profanity.censor(body);

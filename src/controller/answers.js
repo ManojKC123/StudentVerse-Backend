@@ -3,7 +3,7 @@ const Post = require("../model/post");
 const asyncHandler = require("../auth/async");
 const ErrorResponse = require("../auth/ErrorResponse");
 const { body, validationResult } = require('express-validator');
-
+const profanity = require('../auth/profanity');
 // -----------------FIND Answer BY ID-------------------
 exports.loadAnswerById = asyncHandler(async (req, res, next) => {
     const answer = await Answer.findById(req.params.id);
@@ -25,22 +25,35 @@ exports.addAnswer = async (req, res, next) => {
         return res.status(422).json({ errors });
     }
 
-    try {
+    else {
         const { id } = req.user;
         const { text } = req.body;
-        const poster = await Post.findById(req.body.post);
-        const post = await poster.addAnswer(id, text);
+        const cleartext = profanity.censor(text);
+        if (req.body.post) {
+            const poster = await Post.findById(req.body.post);
+            if (poster) {
+                if(profanity.exists(text)){
+                    poster.censored = true;
 
-        res.status(201).json({success: true, data: post, message:"Answer added Successfully"});
-    } catch (error) {
-        next(error);
+                }
+                const post = await poster.addAnswer(id, cleartext);
+                await post.save();
+                res.status(201).json({ success: true, data: post, message: "Answer added Successfully" });
+            }
+            else {
+                res.status(201).json({ success: false, message: "Post already removed" });
+            }
+        }
+        else{
+            res.status(201).json({ success: false, message: "Post not found" });
+        }
     }
 };
 
 // -----------------FIND all Answer-------------------
-exports.loadAnswer = asyncHandler(async(req, res, next) => {
+exports.loadAnswer = asyncHandler(async (req, res, next) => {
     const post = await Post.findById(req.params.id);
-    if (!post){
+    if (!post) {
         return next(new ErrorResponse("Post not Found"), 404);
     }
     res.status(201).json({
