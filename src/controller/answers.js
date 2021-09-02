@@ -22,7 +22,7 @@ exports.addAnswer = async (req, res, next) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
         const errors = result.array({ onlyFirstError: true });
-        return res.status(422).json({ errors });
+        return res.status(203).json({ errors });
     }
 
     else {
@@ -45,7 +45,7 @@ exports.addAnswer = async (req, res, next) => {
             }
         }
         else{
-            res.status(201).json({ success: false, message: "Post not found" });
+            res.status(201).json({ success: false, message: "Could not post answer" });
         }
     }
 };

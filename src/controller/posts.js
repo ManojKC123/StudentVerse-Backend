@@ -39,7 +39,7 @@ exports.addPost = asyncHandler(async (req, res, next) => {
     var cleartags = [];
     if (!result.isEmpty()) {
         const errors = result.array({ onlyFirstError: true });
-        return res.status(422).json({ error: errors });
+        return res.status(203).json({ error: errors });
     }
     else {
         const { title, tags, body } = req.body;

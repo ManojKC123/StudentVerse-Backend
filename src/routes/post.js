@@ -12,28 +12,28 @@ router.post("/addQuestion", guard, [
     check('title')
         .trim()
         .exists()
-        .withMessage('is required')
+        .withMessage('Title is required')
 
         .notEmpty()
-        .withMessage('cannot be blank')
+        .withMessage('Title cannot be blank')
 
         .isLength({ max: 180 })
-        .withMessage('must be at most 180 characters long'),
+        .withMessage('Title must be at most 180 characters'),
 
     check('body')
         .exists()
         .trim()
-        .withMessage('is required')
+        .withMessage('Body is required')
 
         .isLength({ min: 10 })
-        .withMessage('must be at least 10 characters long')
+        .withMessage('Body must be at least 10 characters')
 
         .isLength({ max: 5000 })
-        .withMessage('must be at most 5000 characters long'),
+        .withMessage('Body must be at most 5000 characters'),
 
     check('tags')
         .exists()
-        .withMessage('is required')
+        .withMessage('Tags is required')
 ], addPost);
 router.get("/userPost", guard, loadUserPost);
 router.put("/post/update", guard, updatePost);

@@ -53,32 +53,32 @@ module.exports = (upload) => {
         check('fname')
             .trim()
             .exists()
-            .withMessage('is required')
+            .withMessage('First Name is required')
 
             .notEmpty()
-            .withMessage('cannot be blank')
+            .withMessage('First Name cannot be blank')
 
             .matches(/^[a-zA-Z_-]+$/)
-            .withMessage('Names can only contain alphabets'),
+            .withMessage('First Name can only contain alphabets'),
 
         check('lname')
             .trim()
             .exists()
-            .withMessage('is required')
+            .withMessage('Last Name is required')
 
             .notEmpty()
-            .withMessage('cannot be blank')
+            .withMessage('Last Name cannot be blank')
 
             .matches(/^[a-zA-Z_-]+$/)
-            .withMessage('Names can only contain alphabets'),
+            .withMessage('Last Name can only contain alphabets'),
 
         check('password')
             .trim()
             .exists()
-            .withMessage('is required')
+            .withMessage('Password is required')
 
             .notEmpty()
-            .withMessage('cannot be blank')
+            .withMessage('Password cannot be blank')
 
             .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,15}$/)
             .withMessage('6-15 characters, one uppercase, one number and a special character'),
@@ -100,35 +100,35 @@ module.exports = (upload) => {
         check('fname')
             .trim()
             .exists()
-            .withMessage('is required')
+            .withMessage('First Name is required')
 
             .notEmpty()
-            .withMessage('cannot be blank')
+            .withMessage('First Name cannot be blank')
 
             .matches(/^[a-zA-Z_-]+$/)
-            .withMessage('Names can only contain alphabets'),
+            .withMessage('First Name can only contain alphabets'),
 
         check('lname')
             .trim()
             .exists()
-            .withMessage('is required')
+            .withMessage('Last Name is required')
 
             .notEmpty()
-            .withMessage('cannot be blank')
+            .withMessage('Last Name cannot be blank')
 
             .matches(/^[a-zA-Z_-]+$/)
-            .withMessage('Names can only contain alphabets'),
+            .withMessage('Last Name can only contain alphabets'),
 
         check('address')
             .trim()
             .exists()
-            .withMessage('is required')
+            .withMessage('Address is required')
 
             .notEmpty()
-            .withMessage('cannot be blank')
+            .withMessage('Address cannot be blank')
 
             .matches(/^[a-zA-Z_-]+$/)
-            .withMessage('address can only contain alphabets'),
+            .withMessage('Address can only contain alphabets'),
 
 
     ], userController.updateUser);
@@ -138,10 +138,10 @@ module.exports = (upload) => {
         check('newPassword')
             .trim()
             .exists()
-            .withMessage('is required')
+            .withMessage('Password is required')
 
             .notEmpty()
-            .withMessage('cannot be blank')
+            .withMessage('Password cannot be blank')
 
             .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,15}$/)
             .withMessage('6-15 characters, one uppercase, one number and a special character')

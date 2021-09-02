@@ -15,7 +15,7 @@ const userSignup = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const error = errors.array({ onlyFirstError: true })
-    return res.status(422).json({ error: error })
+    res.status(203).json({ success: false , error: error })
   }
   else {
     const hash = await bcrypt.hash(password, 7);
@@ -60,7 +60,6 @@ const userLogin = asyncHandler(async (req, res, next) => {
   //because in password field we have set the property select:false , but here we need as password so we added + sign
 
   if (!user) {
-    console.log("its here")
     return res.status(201).json({
       success: false,
       message: "Invalid credentails user",
@@ -116,6 +115,12 @@ const findUser = asyncHandler(async (req, res, next) => {
 
 //--------------------------User Update-----------------
 const updateUser = asyncHandler(async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = errors.array({ onlyFirstError: true })
+    res.status(203).json({ success: false , error: error })
+  }
+  else {
   const userForCheckpass = await User.findOne({ _id: req.user._id }).select(
     "+password"
   );
@@ -145,9 +150,16 @@ const updateUser = asyncHandler(async (req, res, next) => {
       }
     }
   );
+  }
 });
 
 const updatePassword = asyncHandler(async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = errors.array({ onlyFirstError: true })
+    res.status(203).json({ success: false , error: error })
+  }
+  else {
   const userForCheckpass = await User.findOne({ _id: req.user._id }).select(
     "+password"
   );
@@ -176,6 +188,7 @@ const updatePassword = asyncHandler(async (req, res, next) => {
         });
       }
     });
+  }
 });
 const updatePicture = asyncHandler(async (req, res, next) => {
   const update = await User.updateOne({ "_id": req.user._id }, { profilename: req.file.filename, profileId: req.file.id })

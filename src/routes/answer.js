@@ -13,13 +13,13 @@ router.post("/addAnswer", guard,[
     check('text')
         .trim()
         .exists()
-        .withMessage('is required')
+        .withMessage('Answer is required')
 
         .notEmpty()
-        .withMessage('cannot be blank')
+        .withMessage('Answer cannot be blank')
 
-        .isLength({ max: 180 })
-        .withMessage('must be at most 2500 characters long'), 
+        .isLength({ max: 2500 })
+        .withMessage('Answer must be at most 2500 characters'), 
 ], addAnswer);
 router.get("/answers/:id", loadAnswer);
 
