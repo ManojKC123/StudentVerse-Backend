@@ -81,7 +81,7 @@ module.exports = (upload) => {
             .withMessage('Password cannot be blank')
 
             .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,15}$/)
-            .withMessage('6-15 characters, one uppercase, one number and a special character'),
+            .withMessage('Fulfill password criteria'),
 
 
     ], userController.userSignup);
