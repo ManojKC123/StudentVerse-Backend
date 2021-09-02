@@ -36,6 +36,7 @@ exports.loadPostsById = asyncHandler(async (req, res, next) => {
 exports.addPost = asyncHandler(async (req, res, next) => {
     const result = validationResult(req);
     var censored = false;
+    var cleartags = [];
     if (!result.isEmpty()) {
         const errors = result.array({ onlyFirstError: true });
         return res.status(422).json({ error: errors });
@@ -45,12 +46,17 @@ exports.addPost = asyncHandler(async (req, res, next) => {
         if(profanity.exists(title) || profanity.exists(body)){
             censored = true
         }
+        for(i in tags){
+            const checktags = profanity.censor(tags[i])
+            cleartags.push(checktags);
+            console.log(checktags, cleartags)
+        }
         const cleartitle = profanity.censor(title);
         const clearbody = profanity.censor(body);
         const author = req.user.id;
         const post = await Post.create({
             title: cleartitle,
-            tags,
+            tags: cleartags,
             author,
             body: clearbody,
             censored

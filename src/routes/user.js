@@ -35,6 +35,21 @@ module.exports = (upload) => {
                 });
             }),
 
+        check('mobile')
+            .custom((value, {req})=>{
+                return new Promise((resolve, reject)=>{
+                    User.findOne({ mobile: req.body.mobile }, function (err, user) {
+                        if (err) {
+                            reject(new Error('Server Error'))
+                        }
+                        if (Boolean(user)) {
+                            reject(new Error('Mobile Number already in use'))
+                        }
+                        resolve(true)
+                    });
+                })
+            }),
+
         check('fname')
             .trim()
             .exists()
