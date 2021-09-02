@@ -22,7 +22,7 @@ exports.addAnswer = async (req, res, next) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
         const errors = result.array({ onlyFirstError: true });
-        return res.status(203).json({ errors });
+        res.status(203).json({ success: false , error: errors })
     }
 
     else {

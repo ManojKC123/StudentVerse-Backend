@@ -39,7 +39,7 @@ exports.addPost = asyncHandler(async (req, res, next) => {
     var cleartags = [];
     if (!result.isEmpty()) {
         const errors = result.array({ onlyFirstError: true });
-        return res.status(203).json({ error: errors });
+        return res.status(203).json({ success: false , error: errors })
     }
     else {
         const { title, tags, body } = req.body;
@@ -49,7 +49,6 @@ exports.addPost = asyncHandler(async (req, res, next) => {
         for(i in tags){
             const checktags = profanity.censor(tags[i])
             cleartags.push(checktags);
-            console.log(checktags, cleartags)
         }
         const cleartitle = profanity.censor(title);
         const clearbody = profanity.censor(body);
