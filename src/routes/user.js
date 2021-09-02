@@ -15,7 +15,7 @@ module.exports = (upload) => {
             bucketName: 'uploads'
         });
     });
-    
+
     //signup
     router.post("/signup", [
         check('fname')
@@ -27,7 +27,7 @@ module.exports = (upload) => {
             .withMessage('First Name cannot be blank')
 
             .matches(/^[a-zA-Z_-]+$/)
-            .withMessage('First Name can only contain alphabets'),
+            .withMessage('Names can only contain alphabets'),
 
         check('lname')
             .trim()
@@ -58,8 +58,11 @@ module.exports = (upload) => {
             }),
 
         check('mobile')
-            .custom((value, {req})=>{
-                return new Promise((resolve, reject)=>{
+            .trim()
+            .exists()
+            .withMessage('Password is required')
+            .custom((value, { req }) => {
+                return new Promise((resolve, reject) => {
                     User.findOne({ mobile: req.body.mobile }, function (err, user) {
                         if (err) {
                             reject(new Error('Server Error'))
