@@ -18,6 +18,28 @@ module.exports = (upload) => {
     
     //signup
     router.post("/signup", [
+        check('fname')
+            .trim()
+            .exists()
+            .withMessage('First Name is required')
+
+            .notEmpty()
+            .withMessage('First Name cannot be blank')
+
+            .matches(/^[a-zA-Z_-]+$/)
+            .withMessage('First Name can only contain alphabets'),
+
+        check('lname')
+            .trim()
+            .exists()
+            .withMessage('Last Name is required')
+
+            .notEmpty()
+            .withMessage('Names cannot be blank')
+
+            .matches(/^[a-zA-Z_-]+$/)
+            .withMessage('Names can only contain alphabets'),
+
         check('email')
             .isEmail()
             .withMessage('Please enter a valid Email')
@@ -49,28 +71,6 @@ module.exports = (upload) => {
                     });
                 })
             }),
-
-        check('fname')
-            .trim()
-            .exists()
-            .withMessage('First Name is required')
-
-            .notEmpty()
-            .withMessage('First Name cannot be blank')
-
-            .matches(/^[a-zA-Z_-]+$/)
-            .withMessage('First Name can only contain alphabets'),
-
-        check('lname')
-            .trim()
-            .exists()
-            .withMessage('Last Name is required')
-
-            .notEmpty()
-            .withMessage('Last Name cannot be blank')
-
-            .matches(/^[a-zA-Z_-]+$/)
-            .withMessage('Last Name can only contain alphabets'),
 
         check('password')
             .trim()
