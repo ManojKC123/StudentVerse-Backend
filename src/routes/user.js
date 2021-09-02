@@ -65,7 +65,7 @@ module.exports = (upload) => {
                             reject(new Error('Server Error'))
                         }
                         if (Boolean(user)) {
-                            reject(new Error('Mobile Number already in use'))
+                            reject(new Error('Mobile already in use'))
                         }
                         resolve(true)
                     });
