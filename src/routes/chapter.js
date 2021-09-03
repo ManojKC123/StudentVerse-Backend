@@ -27,7 +27,7 @@ module.exports = (upload) => {
                     });
                 }
 
-                if (files[0].contentType === 'image/jpeg' || files[0].contentType === 'image/png' || files[0].contentType === 'image/svg+xml') {
+                if (files[0].contentType === 'image/jpeg' || files[0].contentType === 'image/png' || files[0].contentType === 'image/svg+xml' || files[0].contentType === 'image/webp') {
                     // render image to browser
                     gfs.openDownloadStreamByName(req.params.pictureName).pipe(res);
                 } else {
