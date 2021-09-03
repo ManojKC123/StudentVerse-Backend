@@ -18,6 +18,23 @@ module.exports = (upload) => {
 
     //signup
     router.post("/signup", [
+        check('email')
+            .isEmail()
+            .withMessage('Please enter a valid Email')
+            .custom((value, { req }) => {
+                return new Promise((resolve, reject) => {
+                    User.findOne({ email: req.body.email }, function (err, user) {
+                        if (err) {
+                            reject(new Error('Server Error'))
+                        }
+                        if (Boolean(user)) {
+                            reject(new Error('E-mail already in use'))
+                        }
+                        resolve(true)
+                    });
+                });
+            }),
+
         check('fname')
             .trim()
             .exists()
@@ -40,27 +57,11 @@ module.exports = (upload) => {
             .matches(/^[a-zA-Z_-]+$/)
             .withMessage('Names can only contain alphabets'),
 
-        check('email')
-            .isEmail()
-            .withMessage('Please enter a valid Email')
-            .custom((value, { req }) => {
-                return new Promise((resolve, reject) => {
-                    User.findOne({ email: req.body.email }, function (err, user) {
-                        if (err) {
-                            reject(new Error('Server Error'))
-                        }
-                        if (Boolean(user)) {
-                            reject(new Error('E-mail already in use'))
-                        }
-                        resolve(true)
-                    });
-                });
-            }),
 
         check('mobile')
             .trim()
             .exists()
-            .withMessage('Password is required')
+            .withMessage('Mobile is required')
             .custom((value, { req }) => {
                 return new Promise((resolve, reject) => {
                     User.findOne({ mobile: req.body.mobile }, function (err, user) {
