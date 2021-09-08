@@ -22,15 +22,29 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-it('testing answer add to post', async() =>{
+// it('testing answer add to post', async() =>{
+//   Post.findOne({ _id: "61372f8b2ffe5600048a705c"}, function(err, post) {
+//     if(post!=null){
+//       post.answer.push({
+//         author: '4edd40c86762e0fb12000003',
+//         text: 'This is a corona test'
+//       })
+//       post.save().then((up) =>{
+//            expect(up.body).toEqual('Post Schema test updated');
+//         })
+//     }
+//   })
+// })
+
+it('testing vote add to post', async() =>{
   Post.findOne({ _id: "61372f8b2ffe5600048a705c"}, function(err, post) {
     if(post!=null){
-      post.answer.push({
-        author: '4edd40c86762e0fb12000003',
-        text: 'This is a corona test'
+      post.votes.push({
+        user: '4edd40c86762e0fb12000003',
+        vote: 1
       })
       post.save().then((up) =>{
-           expect(up.body).toEqual('Post Schema test updated');
+           expect(up.body).toEqual('Post Schema vote tested');
         })
     }
   })
